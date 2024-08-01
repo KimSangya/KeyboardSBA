@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html
+	lang="ko"
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<!-- head config가 들어가는 자리 -->
+	<th:block th:replace="fragments/config :: configFragment"></th:block>
+<body>
+	<div id="wrap">
+		<!-- header -->
+		<header th:replace="fragments/header :: headerFragment">
+		
+		</header>
+		
+		<!-- content -->
+		<section layout:fragment="content">
+			
+		</section>
+		
+		<!-- script -> content 조각 안에 있음. -->
+		<th:block layout:fragment="script"></th:block>
+			
+		</th:block>
+		
+		<!-- footer -->
+		<footer th:replace="fragments/footer :: footerFragment">
+		
+		</footer>
+	</div>
+</body>
+</html>
