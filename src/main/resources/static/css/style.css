@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+a, a:hover {text-decoration:none; color:#000;}
+
+.modern{
+	background-color:#d9d9d9;
+}
+
+.sign-up-box {width:650px; height:750px; background-color:#ebebeb; margin-top:20px; box-shadow:5px 5px 5px 5px #BDC0C0;}
+.sign-up-subject {margin:20px; font-weight:bold;}
+
+#signUpForm{width:500px;}
+
+.shadow-box {width:550px; height: 500px; background-color:#ebebeb; margin-top:20px; box-shadow:5px 5px 5px 5px #BDC0C0;}
+
+.login-box {width:700px;}
+
+.contents{height:850px;}
+
+.contents-box {width:700px;}
+
+#writeTextArea {height:100px;}
+
+.comment-input {width:565px;}
+
+.btnRed{background-color:#ffc8c8;}
+
+.btnCheck{background-color:#c8fffc;}
