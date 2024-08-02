@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<header class="modern" th:fragment="headerFragment">
+<header class="bg-warning " th:fragment="headerFragment">
 	<div class="h-100 d-flex justify-content-between align-items-center">
 		<!-- 로고 영역 -->
 		<div>
-			<!-- 영역 비어있게 하면 됨. -->
-		</div>
-		
-		<div class="ml-5">
-			<h1>KeyBoard SBA</h1>
+			<h1>MEMO 게시판</h1>
 		</div>
 
 		<!-- 로그인 영역 -->
@@ -16,13 +12,8 @@
 			<span th:text="${session.userName} + '님 안녕하세요'"></span> 
 			<a href="/user/sign-out">로그아웃</a>
 		</div>
-		<div class="d-flex">
-			<div th:unless="${session.userId != null}" class="mr-3">
-				<a href="/user/sign-up-view">회원가입</a>
-			</div>
-			<div th:unless="${session.userId != null}" class="mr-3">
-				<a href="/user/sign-in-view">로그인</a>
-			</div>
+		<div th:unless="${session.userId != null}"> <!-- 알아서 null일때 참이 될 것이다. -->
+			<a href="/user/sign-in-view">로그인</a>
 		</div>
 	</div>
 </header>
