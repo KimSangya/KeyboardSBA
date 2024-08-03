@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header class="modern" th:fragment="headerFragment">
-	<div class="h-100 d-flex justify-content-between align-items-center">
+	<div class="h-100 d-flex justify-content-center align-items-center">
 		<!-- 로고 영역 -->
-		<div>
-			<!-- 영역 비어있게 하면 됨. -->
-		</div>
-		
 		<div class="ml-5">
 			<h1>KeyBoard SBA</h1>
 		</div>
-
-		<!-- 로그인 영역 -->
+	</div>
+	<div class="d-flex justify-content-end mr-3">
 		<div th:if="${session.userId != null}">
 			<span th:text="${session.userName} + '님 안녕하세요'"></span> 
 			<a href="/user/sign-out">로그아웃</a>
 		</div>
 		<div class="d-flex">
-			<div th:unless="${session.userId != null}" class="mr-3">
+			<div th:unless="${session.userId != null}" class="mr-4">
 				<a href="/user/sign-up-view">회원가입</a>
 			</div>
-			<div th:unless="${session.userId != null}" class="mr-3">
+			<div th:unless="${session.userId != null}" class="mr-3 mb-2">
 				<a href="/user/sign-in-view">로그인</a>
 			</div>
 		</div>
 	</div>
+	<nav class="menu d-flex align-items-center">
+			<ul class="nav nav-fill w-100">
+				<li class="nav-item"><a href="/item/item-keyboard-view" class="nav-link">키보드</a></li>
+				<li class="nav-item"><a href="/item/item-keycaps-view" class="nav-link">키캡</a></li>
+				<li class="nav-item"><a href="/item/item-trade-view" class="nav-link">교환</a></li>
+				<li class="nav-item"><a href="/auction/auction-list-view" class="nav-link">경매</a></li>
+				<li class="nav-item"><a href="/alert/alert-detail-view" class="nav-link">신고</a></li>
+				<li class="nav-item"><a href="/post/post-list-view" class="nav-link">자유게시판</a></li>
+			</ul>
+	</nav>
 </header>
 </html>

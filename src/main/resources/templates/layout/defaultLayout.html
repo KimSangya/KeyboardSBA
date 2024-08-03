@@ -4,11 +4,11 @@
 	xmlns:th="http://www.thymeleaf.org" 
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<!-- head config가 들어가는 자리 -->
-	<th:block th:replace="fragments/config :: configFragment"></th:block>
+	<th:block th:replace="~{fragments/config :: configFragment}"></th:block>
 <body>
 	<div id="wrap">
 		<!-- header -->
-		<header th:replace="fragments/header :: headerFragment">
+		<header th:replace="~{fragments/header :: headerFragment}">
 		
 		</header>
 		
@@ -23,7 +23,7 @@
 		</th:block>
 		
 		<!-- footer -->
-		<footer th:replace="fragments/footer :: footerFragment">
+		<footer th:replace="~{fragments/footer :: footerFragment}">
 		
 		</footer>
 	</div>

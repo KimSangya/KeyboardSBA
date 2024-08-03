@@ -15,8 +15,6 @@ a, a:hover {text-decoration:none; color:#000;}
 
 .login-box {width:700px;}
 
-.contents{height:850px;}
-
 .contents-box {width:700px;}
 
 #writeTextArea {height:100px;}
@@ -26,3 +24,15 @@ a, a:hover {text-decoration:none; color:#000;}
 .btnRed{background-color:#ffc8c8;}
 
 .btnCheck{background-color:#c8fffc;}
+
+.menu{background-color : #f1f1f1;}
+
+.img{
+	width:200px;
+	height:200px;
+}
+
+footer {
+	height : 100px;
+	transform: translateY(0%);
+}
