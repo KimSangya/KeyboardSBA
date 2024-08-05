@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-50">
+		<h1>글쓰기</h1>
+		
+		<input type="text" id="subject" class="form-control" placeholder="제목을 입력하세요">
+		<textarea rows="10" id="content" class="form-control" placeholder="내용을 입력하세요"></textarea>
+		<div class="d-flex justify-content-end">
+			<input type="file" id="file" class="my-3" accept=".jpg, .png, .gif, .jpeg"> <!-- accept태그를 사용하면서 어떤 확장자만 저장이 가능한가에 대해서 확인이 가능하다. -->
+		</div>
+		
+		<div class="d-flex justify-content-between">
+			<button type="button" id="postListBtn" class="btn btn-dark">목록</button>
+			
+			<div>
+				<button type="button" id="clearBtn" class="btn btn-secondary">모두지우기</button>
+				<button type="button" id="saveBtn" class="btn btn-warning">저장</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+		$(document).ready(function() {
+			$("#postListBtn").on('click', function() {
+				location.href="/post/post-list-view";
+				// 차이가 가능하다면, a태그는 마우스 커서를 두면 따로 보인다는것이다.
+			});
+			
+			$("#clearBtn").on('click', function() {
+				$("#subject").val("");
+				$("#content").val("");
+				
+			});
+			
+			$("#saveBtn").on("click", function() {
+				let subject = $("#subject").val().trim();
+				let content = $("#content").val();
+				let fileName = $("#file").val(); // 파일명인것일뿐이다. C:\fakepath\bird-7943041_640.jpg 요런 값이 들어있다. 진짜 이미지가 아닌, 파일의 경로일뿐이다.
+				// console.log(file);  
+
+				if(!subject) {
+					alert("제목을 입력하세요");
+					return;
+				}
+				
+				if(!content) {
+					alert("내응을 입력하세요");
+					return;
+				}
+				// 파일명이 비워져 있지 않으면 => 확장자 체크를 할 수 있다.
+				if (fileName) {
+					// alert("파일이 있다.")
+					// 이때 확장자만 뽑아서 사용하면 된다. 선생님의 알고리즘 방법.
+					// C:\fakepath\bird-7943041_640.jpg 마지막칸에 있는게 확장자이다.
+					
+					// pop stack이라는 메모리가 있는데, 위에 차곡차곡 쌓여지는 원리 / 배열칸중에서 제일 마지막에 있는 친구를 뺀다. / push(넣고)/pop(뺀다)
+					// 소문자 또는 대문자로 결과 도출을 하게 되는 것, 소문자로 변환된 확장자가 나오는 것을 toLowerCase라고 한다.
+					let extension = fileName.split(".").pop().toLowerCase(); 
+					console.log(extension);
+					
+					// inarray함수(대상, ["배열"]) 참이면 1 아니면 -1
+					if($.inArray(extension, ["jpg", "gif", "png", "jpeg"]) == -1) { // 허용되지 않은 친구가 들어왔을때 참인 경우.
+						alert("이미지 파일만 업로드 할 수 있습니다.");
+					
+						// 파일을 비운다
+						$("#file").val("");
+						return;
+					}
+				}
+								
+				console.log(subject);
+				console.log(content);
+				
+				// form 태그를 js에서 만든다.
+				// 이미지 업로드시 반드시 필요
+				let formData = new FormData(); // 폼태그 열고 닫고 한 상태만 등록한 상태
+				
+				// 이제 input을 했던것을 보내야한다.
+				formData.append("subject", subject); // append(키, 값); key는 name과 같고 리퀘스트 파라미터명
+				formData.append("content", content);
+				formData.append("file", $("#file")[0].files[0]);  // $()[0] 0번째 파일이다. 라는걸 무조건 붙어야한다.
+				
+				// AJAX
+				$.ajax({
+					// request
+					type : "post"
+					, url : "/post/create"
+					, data : formData // 이친구는 사용 할 때, 조건이 있어서 따로 추가도 해야한다. enctype 
+					, enctype : "multipart/form-data" // 파일 업로드 필수 설정
+					, processData : false // 이친구는 카멜 케이스로 지정, 파일 업로드 필수 설정 하나의 스트링으로만 넘어간다면 true이지만, form 같은 넓은 속성에서 찾아 볼 수 있음.
+					, contentType : false // 파일 업로드 필수 설정, jquery ajax 함수 찾아보기
+					
+					// response
+					, success:function(data) {
+						if(data.code == 200) {
+							alert("메모가 저장되었습니다.");
+							// 글 목록 화면 이동
+							location.href = "/post/post-list-view";
+						} else {
+							alert(data.error_message);
+						}
+					}
+					, error:function(e) {
+						alert("글을 저장하는데 실패했습니다.");
+					}
+				});
+			});
+		});
+    </script>
+</th:block>
