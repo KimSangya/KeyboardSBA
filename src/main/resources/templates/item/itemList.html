@@ -7,105 +7,41 @@
 	<div class="container"> <!-- 전체 div 컨테이너 설정 -->
 		<div class="mt-5"> <!-- 경매 컨테이너 설정 -->
 			<span>경매</span>
+			
 			<div class="d-flex">
-				<div class="mt-3 mr-5">
-					<img src="../img/image1.jpg" class="img"> <br>
-					<span>KMG TKL</span> <br>
-					<span>333,000원</span> 
-				</div>
-				
-				<div class="mt-3 mr-5">
-					<img src="../img/image1.jpg" class="img"> <br>
-					<span>KMG TKL</span> <br>
-					<span>333,000원</span> 
-				</div>
-				
-				<div class="mt-3 mr-5">
-					<img src="../img/image1.jpg" class="img"> <br>
-					<span>KMG TKL</span> <br>
-					<span>333,000원</span> 
-				</div>
-				
-				<div class="mt-3 mr-5">
-					<img src="../img/image1.jpg" class="img"> <br>
-					<span>KMG TKL</span> <br>
-					<span>333,000원</span> 
-				</div>
-				
-				<div class="mt-3 mr-5">
-					<img src="../img/image1.jpg" class="img"> <br>
-					<span>KMG TKL</span> <br>
-					<span>333,000원</span> 
+				<div th:each="item : ${itemKeyBoardList}">
+					<div class="mt-3 mr-5">
+						<img th:src="${item.imageUrl}" class="img"> <br>
+						<span th:text="${item.title}">제목</span> <br>
+						<span th:text="${item.price}">가격</span> 
+					</div>
 				</div>
 			</div>
 		</div> <!-- 경매 컨테이너 끝 -->
 		
 		<div class="mt-5"> <!-- 경매 컨테이너 설정 -->
 			<span>키보드</span>
+			
 			<div class="d-flex">
-				<div class="mt-3 mr-5">
-					<img src="../img/image1.jpg" class="img"> <br>
-					<span>KMG TKL</span> <br>
-					<span>333,000원</span> 
-				</div>
-				
-				<div class="mt-3 mr-5">
-					<img src="../img/image1.jpg" class="img"> <br>
-					<span>KMG TKL</span> <br>
-					<span>333,000원</span> 
-				</div>
-				
-				<div class="mt-3 mr-5">
-					<img src="../img/image1.jpg" class="img"> <br>
-					<span>KMG TKL</span> <br>
-					<span>333,000원</span> 
-				</div>
-				
-				<div class="mt-3 mr-5">
-					<img src="../img/image1.jpg" class="img"> <br>
-					<span>KMG TKL</span> <br>
-					<span>333,000원</span> 
-				</div>
-				
-				<div class="mt-3 mr-5">
-					<img src="../img/image1.jpg" class="img"> <br>
-					<span>KMG TKL</span> <br>
-					<span>333,000원</span> 
+				<div th:each="item : ${itemKeyBoardList}">
+					<div class="mt-3 mr-5">
+						<img th:src="${item.imageUrl}" class="img"> <br>
+						<span th:text="${item.title}">제목</span> <br>
+						<span th:text="${item.price}">가격</span> 
+					</div>
 				</div>
 			</div>
 		</div> <!-- 경매 컨테이너 끝 -->
 		
 		<div class="mt-5"> <!-- 경매 컨테이너 설정 -->
-			<span>키보드</span>
+			<span>키캡</span>
 			<div class="d-flex">
-				<div class="mt-3 mr-5">
-					<img src="../img/image1.jpg" class="img"> <br>
-					<span>KMG TKL</span> <br>
-					<span>333,000원</span> 
-				</div>
-				
-				<div class="mt-3 mr-5">
-					<img src="../img/image1.jpg" class="img"> <br>
-					<span>KMG TKL</span> <br>
-					<span>333,000원</span> 
-				</div>
-				
-				<div class="mt-3 mr-5">
-					<img src="../img/image1.jpg" class="img"> <br>
-					<span>KMG TKL</span> <br>
-					<span>333,000원</span> 
-				</div>
-				
-				<div class="mt-3 mr-5">
-					<img src="../img/image1.jpg" class="img"> <br>
-					<span>KMG TKL</span> <br>
-					<span>333,000원</span> 
-				</div>
-				
-				<div class="mt-3 mr-5">
-					<img src="../img/image1.jpg" class="img"> <br>
-					<span>KMG TKL</span> <br>
-					<span>333,000원</span> 
+				<div th:each="item : ${itemKeyBoardList}">
+					<div class="mt-3 mr-5">
+						<img th:src="${item.imageUrl}" class="img"> <br>
+						<span th:text="${item.title}">제목</span> <br>
+						<span th:text="${item.price}">가격</span> 
+					</div>
 				</div>
 			</div>
 		</div>

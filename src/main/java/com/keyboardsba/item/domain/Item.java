@@ -15,45 +15,24 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@Getter
-@Table(name = "item")
-@Entity
+@Data
 public class Item {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(name = "userId")
+	private String loginId;
 	private int userId;
-	
 	private String title;
-	
 	private int price;
-	
 	private String status;
-	
 	private String type;
-	
 	private String content;
-	
 	private LocalDateTime time;
-	
-	@Column(name = "imageUrl")
 	private String imageUrl;
-	
-	@CreationTimestamp
-	@Column(name = "createdAt")
 	private LocalDateTime createdAt;
-	
-	@UpdateTimestamp
-	@Column(name = "updatedAt")
 	private LocalDateTime updatedAt;
 }

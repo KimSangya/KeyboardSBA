@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.keyboardsba.item.mapper.ItemMapper">
+	<insert id="insertItem" parameterType="map">
+		INSERT INTO `item`
+		(
+			`userId`
+			,`loginId`
+			,`title`
+			,`price`
+			,`status`
+			,`type`
+			,`content`
+			, `time`
+			,`imageUrl`
+			,`createdAt`
+			,`updatedAt`
+		)
+		VALUES
+		(
+			#{userId}
+			, #{loginId}
+			, #{productName}
+			, #{productPrice}
+			, #{productStatus}
+			, #{productValue}
+			, #{writeTextArea}
+			, NULL
+			, #{imagePath}
+			, NOW()
+			, NOW()
+		)
+	</insert> 
+	
+	<select id="selectItemListByType" parameterType="String" resultType="com.keyboardsba.item.domain.Item">
+		SELECT
+			`loginId`
+			,`title`
+			,`price`
+			,`status`
+			,`type`
+			,`imageUrl`
+		FROM
+			`item`
+		WHERE
+			`type` = #{type}
+	</select>
+ </mapper>
