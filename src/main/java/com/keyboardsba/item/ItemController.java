@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.keyboardsba.item.bo.ItemBO;
 import com.keyboardsba.item.domain.Item;
@@ -25,8 +26,8 @@ public class ItemController {
 			Model model, HttpSession session) {
 		
 		List<Item> itemKeyBoardList = itemBO.getItemListByType("keyboard"); 
-		List<Item> itemKeyCapList = itemBO.getItemListByType("키캡"); 
-		List<Item> itemKeyTradeList = itemBO.getItemListByType("교환"); 
+		List<Item> itemKeyCapList = itemBO.getItemListByType("keycap"); 
+		List<Item> itemKeyTradeList = itemBO.getItemListByType("trade"); 
 		
 		model.addAttribute("itemKeyBoardList", itemKeyBoardList);
 		model.addAttribute("itemKeyCapList", itemKeyCapList);
@@ -36,17 +37,23 @@ public class ItemController {
 	}
 	
 	@GetMapping("/item-keyboard-view")
-	public String Keyboard() {
+	public String Keyboard(Model model, HttpSession session) {
+		List<Item> itemKeyBoardList = itemBO.getItemListByType("keyboard"); 
+		model.addAttribute("itemKeyBoardList", itemKeyBoardList);
 		return "item/keyboard";
 	}
 	
 	@GetMapping("/item-keycap-view")
-	public String Keycap() {
+	public String Keycap(Model model, HttpSession session) {
+		List<Item> itemKeyCapList = itemBO.getItemListByType("keycap"); 
+		model.addAttribute("itemKeyCapList", itemKeyCapList);
 		return "item/keycap";
 	}
 	
 	@GetMapping("/item-trade-view")
-	public String Trade() {
+	public String Trade(Model model, HttpSession session) {
+		List<Item> itemTradeList = itemBO.getItemListByType("trade");
+		model.addAttribute("itemTradeList", itemTradeList);
 		return "item/trade";
 	}
 	
@@ -56,7 +63,13 @@ public class ItemController {
 	}
 	
 	@GetMapping("/item-detail-view")
-	public String Detail() {
+	public String Detail(
+			@RequestParam("itemId") int itemId,
+			Model model, HttpSession session) {
+		int userId = (int)session.getAttribute("userId");
+		Item item = itemBO.getItemByItemIdUserId(itemId, userId);
+		
+		model.addAttribute("item", item);
 		return "item/detail";
 	}
 }

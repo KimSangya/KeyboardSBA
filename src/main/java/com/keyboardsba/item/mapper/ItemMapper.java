@@ -21,4 +21,8 @@ public interface ItemMapper {
 			@Param("imagePath") String imagePath);
 	
 	public List<Item> selectItemListByType(String type);
+	
+	public Item selectItemByItemIdUserId(
+			@Param("itemId") int itemId,
+			@Param("userId") int userId);
 }
