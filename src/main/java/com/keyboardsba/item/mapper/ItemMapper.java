@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.keyboardsba.item.domain.Item;
+import com.keyboardsba.user.entity.UserEntity;
 
 @Mapper
 public interface ItemMapper {
@@ -23,4 +24,6 @@ public interface ItemMapper {
 	public List<Item> selectItemListByType(String type);
 	
 	public Item selectItemByItemId(int itemId);
+	
+	public int selectUserId(int contactId);
 }

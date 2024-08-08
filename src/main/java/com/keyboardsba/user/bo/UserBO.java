@@ -3,6 +3,7 @@ package com.keyboardsba.user.bo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.keyboardsba.item.bo.ItemBO;
 import com.keyboardsba.user.entity.UserEntity;
 import com.keyboardsba.user.repository.UserRepository;
 
@@ -11,6 +12,9 @@ public class UserBO {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ItemBO itemBO;
 	
 	public UserEntity getUserEntityByLoginId(String loginId) {
 		return userRepository.findByloginId(loginId);
@@ -29,5 +33,10 @@ public class UserBO {
 	
 	public UserEntity getUserEntityByLoginIdPassword(String loginId, String password) {
 		return userRepository.findByLoginIdAndPassword(loginId, password);
+	}
+	
+	public UserEntity selectUserId(int contactId) {
+		int userId = itemBO.getItemByUserId(contactId);
+		return userRepository.findById(userId);
 	}
 }

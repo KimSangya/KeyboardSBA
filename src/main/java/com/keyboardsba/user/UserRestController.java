@@ -87,4 +87,26 @@ public class UserRestController {
 				// 응답값
 				return result;
 	}
+	
+	@PostMapping("/contact")
+	public Map<String, Object> contact(
+			@RequestParam("contactId") int contactId,
+			HttpSession session) {
+		
+		Integer userId = (Integer)session.getAttribute("userId");
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		if(userId == null) {
+			result.put("code", "403");
+			result.put("error_message", "로그인을 먼저 해주세요");
+		}
+		
+		userBO.selectUserId(contactId);
+		
+		result.put("code", 200);
+		result.put("result", "성공");
+		
+		return result;
+	}
 }

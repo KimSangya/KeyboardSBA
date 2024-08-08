@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.keyboardsba.common.FileManagerService;
 import com.keyboardsba.item.domain.Item;
 import com.keyboardsba.item.mapper.ItemMapper;
+import com.keyboardsba.user.bo.UserBO;
+import com.keyboardsba.user.entity.UserEntity;
 
 @Service
 public class ItemBO {
@@ -39,4 +41,7 @@ public class ItemBO {
 		return itemMapper.selectItemByItemId(itemId);
 	}
 	
+	public int getItemByUserId(int contactId) {
+		return itemMapper.selectUserId(contactId);
+	}
 }

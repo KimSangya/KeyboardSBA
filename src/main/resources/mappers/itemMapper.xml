@@ -65,4 +65,14 @@
 		WHERE
 			`id` = #{itemId}
 	</select>
+	
+	<select id="selectUserId" parameterType="int" resultType="com.keyboardsba.item.domain.Item">
+		SELECT
+			`userId`
+		FROM
+			`item`
+		WHERE
+			`id` = #{contactId}
+	</select>
+	
  </mapper>

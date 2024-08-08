@@ -44,14 +44,57 @@
 				</div>
 				<br>
 				<div class="d-flex justify-content-center m-3">
-						<button id="signUpBtn" class="btn btnCheck">연락하기</button>
-						<button th:if="${item.userId == session.userId}" id="signUpBtn" class="btn btnCheck ml-5">수정하기</button>
+						<a href="#" class="btn btnCheck callBtn" th:data-contact-id="${item.Id}" data-toggle="modal" data-target="#Modal">연락하기</a>
+						<button th:if="${item.userId == session.userId}" id="updateBtn" class="btn btnCheck ml-5">수정하기</button>
 				</div>
-		</div>
-	</div>
+				<div class="modal fade" id="Modal">
+		  			<div class="modal-dialog modal-dialog-centered">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title ">연락하기</h5>
+					      </div>
+					      <div class="modal-body">
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+					      </div>
+					    </div>
+					</div>
+				</div>
+			</div>
 </section>
 
 <th:block layout:fragment="script">
 	<script>
+	$(document).ready(function(){
+		$(".callBtn").on("click", function(e){
+			e.preventDefault();
+			//alert("버튼이 눌렸음")
+			let contactId = $(this).data("contact-id");
+			$("#Modal").data('contact-id', contactId);
+			// console.log(contactId); 확인 완료
+			
+			$.ajax({
+				type : "post"
+				, url : "/user/contact"
+				, data : {"contact-id" : contactId}
+				, success:function() {
+					if(data.code == 200) {
+						alert("확인이 되었습니다.");
+						$('#Modal').modal('show');
+						
+					} else if(data.code == 403) {
+						alert(error_message);
+					}
+					else {
+						alert(error_message);
+					}
+				}
+				, error:function(e) {
+					alert("열기에 실패하셨습니다.");
+				}
+			});
+		});
+	});
 	</script>
 </th:block>
