@@ -44,7 +44,8 @@
 				</div>
 				<br>
 				<div class="d-flex justify-content-center m-3">
-						<button type="submit" id="signUpBtn" class="btn btnCheck">수정하기</button>
+						<button id="signUpBtn" class="btn btnCheck">연락하기</button>
+						<button th:if="${item.userId == session.userId}" id="signUpBtn" class="btn btnCheck ml-5">수정하기</button>
 				</div>
 		</div>
 	</div>

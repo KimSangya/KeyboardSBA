@@ -22,7 +22,5 @@ public interface ItemMapper {
 	
 	public List<Item> selectItemListByType(String type);
 	
-	public Item selectItemByItemIdUserId(
-			@Param("itemId") int itemId,
-			@Param("userId") int userId);
+	public Item selectItemByItemId(int itemId);
 }

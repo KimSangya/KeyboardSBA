@@ -66,8 +66,14 @@ public class ItemController {
 	public String Detail(
 			@RequestParam("itemId") int itemId,
 			Model model, HttpSession session) {
-		int userId = (int)session.getAttribute("userId");
-		Item item = itemBO.getItemByItemIdUserId(itemId, userId);
+		
+		Integer userId = (Integer)session.getAttribute("userId");
+		
+		if(userId == null) {
+			return "redirect:/";
+		}
+		
+		Item item = itemBO.getItemByItemId(itemId);
 		
 		model.addAttribute("item", item);
 		return "item/detail";

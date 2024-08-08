@@ -35,8 +35,8 @@ public class ItemBO {
 		return ItemList;
 	}
 	
-	public Item getItemByItemIdUserId(int itemId, int userId) {
-		return itemMapper.selectItemByItemIdUserId(itemId, userId);
+	public Item getItemByItemId(int itemId) {
+		return itemMapper.selectItemByItemId(itemId);
 	}
 	
 }
