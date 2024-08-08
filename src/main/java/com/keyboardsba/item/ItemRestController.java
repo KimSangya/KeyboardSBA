@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.keyboardsba.item.bo.ItemBO;
+import com.keyboardsba.user.bo.UserBO;
+import com.keyboardsba.user.entity.UserEntity;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -49,6 +51,33 @@ public class ItemRestController {
 		result.put("code", 200);
 		result.put("result", "성공");
 		
+		return result;
+	}
+	
+	@PostMapping("/contact")
+	public Map<String, Object> contact(
+			@RequestParam("contactId") int contactId,
+			HttpSession session) {
+		
+		Integer userId = (Integer)session.getAttribute("userId");
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		if(userId == null) {
+			result.put("code", "403");
+			result.put("error_message", "로그인을 먼저 해주세요");
+		}
+		
+		UserEntity user =  itemBO.selectUserId(contactId);
+		String name = user.getName();
+		String phoneNumber = user.getPhoneNumber();
+		
+		String modalContent = "<h4>이름: " + name + "</h4>" +
+                "<p>전화번호: " + phoneNumber + "</p>";
+		
+		result.put("code", 200);
+		// result.put("result", "<h4>이름 : </h4>" + "<span>" + name + "</span>" + "<br>" + "<h4>전화번호 : </h4>" + "<span>" +phoneNumber + "</span>");
+		result.put("result", modalContent);
 		return result;
 	}
 }

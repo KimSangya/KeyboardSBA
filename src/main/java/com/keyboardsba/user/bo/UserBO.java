@@ -13,9 +13,6 @@ public class UserBO {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@Autowired
-	private ItemBO itemBO;
-	
 	public UserEntity getUserEntityByLoginId(String loginId) {
 		return userRepository.findByloginId(loginId);
 	}
@@ -35,8 +32,7 @@ public class UserBO {
 		return userRepository.findByLoginIdAndPassword(loginId, password);
 	}
 	
-	public UserEntity selectUserId(int contactId) {
-		int userId = itemBO.getItemByUserId(contactId);
+	public UserEntity selectUserId(int userId) {
 		return userRepository.findById(userId);
 	}
 }

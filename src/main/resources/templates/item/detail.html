@@ -47,21 +47,26 @@
 						<a href="#" class="btn btnCheck callBtn" th:data-contact-id="${item.Id}" data-toggle="modal" data-target="#Modal">연락하기</a>
 						<button th:if="${item.userId == session.userId}" id="updateBtn" class="btn btnCheck ml-5">수정하기</button>
 				</div>
-				<div class="modal fade" id="Modal">
-		  			<div class="modal-dialog modal-dialog-centered">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h5 class="modal-title ">연락하기</h5>
-					      </div>
-					      <div class="modal-body">
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-					      </div>
-					    </div>
-					</div>
 				</div>
-			</div>
+				<div class="modal fade" id="Modal">
+				    <div class="modal-dialog modal-dialog-centered">
+				        <div class="modal-content">
+				            <div class="modal-header">
+				                <h5 class="modal-title">연락하기</h5>
+				                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				                    <span aria-hidden="true">&times;</span>
+				                </button>
+				            </div>
+				            <div class="modal-body" id="modalContent">
+				                <!-- 모달 내용 -->
+				            </div>
+				            <div class="modal-footer">
+				                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+		</div>
 </section>
 
 <th:block layout:fragment="script">
@@ -69,25 +74,23 @@
 	$(document).ready(function(){
 		$(".callBtn").on("click", function(e){
 			e.preventDefault();
-			//alert("버튼이 눌렸음")
 			let contactId = $(this).data("contact-id");
 			$("#Modal").data('contact-id', contactId);
-			// console.log(contactId); 확인 완료
+			// console.log(contactId); //확인 완료
 			
 			$.ajax({
 				type : "post"
-				, url : "/user/contact"
-				, data : {"contact-id" : contactId}
-				, success:function() {
+				, url : "/item/contact"
+				, data : {"contactId" : contactId}
+				, success:function(data) {
 					if(data.code == 200) {
-						alert("확인이 되었습니다.");
+						$('#modalContent').html(data.result);
 						$('#Modal').modal('show');
-						
 					} else if(data.code == 403) {
-						alert(error_message);
+						alert(data.error_message);
 					}
 					else {
-						alert(error_message);
+						alert("문제가 발생했습니다.");
 					}
 				}
 				, error:function(e) {
