@@ -1,5 +1,10 @@
 package com.keyboardsba.user.bo;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +37,13 @@ public class UserBO {
 		return userRepository.findByLoginIdAndPassword(loginId, password);
 	}
 	
-	public UserEntity selectUserId(int userId) {
-		return userRepository.findById(userId);
+	public Map<String, Object> selectUserId(int userId) {
+		UserEntity user = userRepository.findById(userId);
+		
+		Map<String, Object> userInfo = new HashMap<>();
+		userInfo.put("name", user.getName());
+		userInfo.put("phoneNumber", user.getPhoneNumber());
+		
+		return userInfo;
 	}
 }

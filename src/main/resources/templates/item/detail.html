@@ -84,12 +84,9 @@
 				, data : {"contactId" : contactId}
 				, success:function(data) {
 					if(data.code == 200) {
-						$('#modalContent').html(data.result);
+						$('#modalContent').append(data.result);
 						$('#Modal').modal('show');
-					} else if(data.code == 403) {
-						alert(data.error_message);
-					}
-					else {
+					} else {
 						alert("문제가 발생했습니다.");
 					}
 				}

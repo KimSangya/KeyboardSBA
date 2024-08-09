@@ -1,6 +1,7 @@
 package com.keyboardsba.item.bo;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,8 +11,6 @@ import com.keyboardsba.common.FileManagerService;
 import com.keyboardsba.item.domain.Item;
 import com.keyboardsba.item.mapper.ItemMapper;
 import com.keyboardsba.user.bo.UserBO;
-import com.keyboardsba.user.entity.UserEntity;
-import com.keyboardsba.user.repository.UserRepository;
 
 @Service
 public class ItemBO {
@@ -24,6 +23,7 @@ public class ItemBO {
 	
 	@Autowired
 	private UserBO userBO;
+	
 	
 	public void addItem(int userId, String loginId, String productName, int productPrice, 
 		String productStatus, String productValue, String writeTextArea, MultipartFile file) {
@@ -49,7 +49,7 @@ public class ItemBO {
 		return itemMapper.selectUserId(contactId);
 	}
 	
-	public UserEntity selectUserId(int contactId) {
+	public Map<String, Object> selectUserId(int contactId) {
 		int userId = getItemByUserId(contactId);
 		return userBO.selectUserId(userId);
 	}

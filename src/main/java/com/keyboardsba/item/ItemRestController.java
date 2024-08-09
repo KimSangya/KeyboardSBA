@@ -1,6 +1,7 @@
 package com.keyboardsba.item;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,24 +60,17 @@ public class ItemRestController {
 			@RequestParam("contactId") int contactId,
 			HttpSession session) {
 		
-		Integer userId = (Integer)session.getAttribute("userId");
-		
 		Map<String, Object> result = new HashMap<>();
+		Map<String, Object> list = itemBO.selectUserId(contactId);
 		
-		if(userId == null) {
-			result.put("code", "403");
-			result.put("error_message", "로그인을 먼저 해주세요");
-		}
+		String name = (String) list.get("name");
+		String phoneNumber = (String) list.get("phoneNumber");
 		
-		UserEntity user =  itemBO.selectUserId(contactId);
-		String name = user.getName();
-		String phoneNumber = user.getPhoneNumber();
 		
 		String modalContent = "<h4>이름: " + name + "</h4>" +
                 "<p>전화번호: " + phoneNumber + "</p>";
 		
 		result.put("code", 200);
-		// result.put("result", "<h4>이름 : </h4>" + "<span>" + name + "</span>" + "<br>" + "<h4>전화번호 : </h4>" + "<span>" +phoneNumber + "</span>");
 		result.put("result", modalContent);
 		return result;
 	}
