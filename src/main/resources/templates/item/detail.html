@@ -84,6 +84,7 @@
 				, data : {"contactId" : contactId}
 				, success:function(data) {
 					if(data.code == 200) {
+						$('#modalContent').empty();
 						$('#modalContent').append(data.result);
 						$('#Modal').modal('show');
 					} else {

@@ -65,10 +65,11 @@ public class ItemRestController {
 		
 		String name = (String) list.get("name");
 		String phoneNumber = (String) list.get("phoneNumber");
+		String email = (String) list.get("email");
 		
-		
-		String modalContent = "<h4>이름: " + name + "</h4>" +
-                "<p>전화번호: " + phoneNumber + "</p>";
+		String modalContent = "<p>이름: " + name + "</p>" +
+                "<p>전화번호: " + phoneNumber + "</p>" + 
+				"<p>이메일 : " + email + "</p>";
 		
 		result.put("code", 200);
 		result.put("result", modalContent);

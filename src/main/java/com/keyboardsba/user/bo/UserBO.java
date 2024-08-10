@@ -43,6 +43,7 @@ public class UserBO {
 		Map<String, Object> userInfo = new HashMap<>();
 		userInfo.put("name", user.getName());
 		userInfo.put("phoneNumber", user.getPhoneNumber());
+		userInfo.put("email", user.getEmail());
 		
 		return userInfo;
 	}
