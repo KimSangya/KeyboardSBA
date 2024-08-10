@@ -12,6 +12,10 @@ import com.keyboardsba.item.domain.Item;
 import com.keyboardsba.item.mapper.ItemMapper;
 import com.keyboardsba.user.bo.UserBO;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+@Slf4j
 @Service
 public class ItemBO {
 
@@ -36,6 +40,29 @@ public class ItemBO {
 		itemMapper.insertItem(userId, loginId, productName, productPrice, productStatus, productValue, writeTextArea, imagePath);
 	}
 	
+	public void updateItem(int itemId, int userId, String loginId, String productName, int productPrice, 
+			String productStatus, String productValue, String writeTextArea, MultipartFile file) {
+			
+			Item item = itemMapper.selectItemByItemIdAndUserId(itemId, userId);
+			
+			if (item == null) {
+				log.warn("[글 수정] post is null. userId:{}, itemId:{}", userId, itemId);
+				return;
+			}
+			
+			String imagePath = null;
+			
+			
+			if(file != null) {
+				imagePath = fileManagerService.uploadFile(file, loginId);
+				if(imagePath != null && item.getImageUrl() != null) {
+					fileManagerService.deleteFile(item.getImageUrl());
+				}
+			}
+			
+			itemMapper.updateItem(itemId, userId, loginId, productName, productPrice, productStatus, productValue, writeTextArea, imagePath);
+		}
+	
 	public List<Item> getItemListByType(String type) {
 		List<Item> ItemList = itemMapper.selectItemListByType(type);
 		return ItemList;
@@ -43,6 +70,10 @@ public class ItemBO {
 	
 	public Item getItemByItemId(int itemId) {
 		return itemMapper.selectItemByItemId(itemId);
+	}
+	
+	public Item getItemByItemIdAndUserId(int itemId, int userId) {
+		return itemMapper.selectItemByItemIdAndUserId(itemId, userId);
 	}
 	
 	public int getItemByUserId(int contactId) {

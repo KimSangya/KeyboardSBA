@@ -79,5 +79,23 @@ public class ItemController {
 		return "item/detail";
 	}
 	
+	@GetMapping("/item-update-view")
+	public String Update(
+			@RequestParam("itemId") int itemId,
+			Model model, HttpSession session ) {
+		
+		Integer userId = (Integer)session.getAttribute("userId");
+		
+		if(userId == null) {
+			return "redirect:/";
+		}
+		
+		Item item = itemBO.getItemByItemIdAndUserId(itemId, userId);
+		
+		model.addAttribute("item", item);
+		
+		return "item/update";
+	
+	}
 	
 }

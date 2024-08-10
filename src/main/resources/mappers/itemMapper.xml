@@ -23,7 +23,7 @@
 			#{userId}
 			, #{loginId}
 			, #{productName}
-			, #{productPrice}
+			, #{productPrice}45
 			, #{productStatus}
 			, #{productValue}
 			, #{writeTextArea}
@@ -66,6 +66,25 @@
 			`id` = #{itemId}
 	</select>
 	
+	<select id="selectItemByItemIdAndUserId" parameterType="map" resultType="com.keyboardsba.item.domain.Item">
+		SELECT
+			`id`
+			,`userId`
+			,`loginId`
+			,`title`
+			,`price`
+			,`status`
+			,`content`
+			,`type`
+			,`content`
+			,`imageUrl`
+		FROM
+			`item`
+		WHERE
+			`id` = #{itemId} AND
+			`userId` = #{userId}
+	</select>
+	
 	<select id="selectUserId" parameterType="int" resultType="int">
 		SELECT
 			`userId`
@@ -74,5 +93,21 @@
 		WHERE
 			`id` = #{contactId}
 	</select>
+	
+	<update id="updateItem" parameterType="map">
+		UPDATE `item`
+		SET
+			`title` = #{productName}
+			, `price` = #{productPrice}
+			, `status` = #{productStatus}
+			, `type` = #{productValue}
+			, `content` = #{writeTextArea}
+			<if test="imagePath != null"> <!-- 업로드가 실패했거나 업로드가 안됐거나.. -->
+			, `imageUrl` = #{imagePath}
+			</if>
+			, `updatedAt` = NOW()
+		WHERE
+			`id` = ${itemId}
+	</update>
 	
  </mapper>

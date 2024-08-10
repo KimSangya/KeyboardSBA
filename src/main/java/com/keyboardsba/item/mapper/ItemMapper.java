@@ -21,9 +21,25 @@ public interface ItemMapper {
 			@Param("writeTextArea") String writeTextArea, 
 			@Param("imagePath") String imagePath);
 	
+	public void updateItem(
+			@Param("itemId") int itemId,
+			@Param("userId") int userId,
+			@Param("loginId") String loginId,
+			@Param("productName") String productName, 
+			@Param("productPrice") int productPrice, 
+			@Param("productStatus") String productStatus, 
+			@Param("productValue") String productValue, 
+			@Param("writeTextArea") String writeTextArea, 
+			@Param("imagePath") String imagePath);
+	
 	public List<Item> selectItemListByType(String type);
 	
 	public Item selectItemByItemId(int itemId);
+	
+	public Item selectItemByItemIdAndUserId(
+			@Param("itemId") int itemId,
+			@Param("userId") int userId);
+	
 	
 	public int selectUserId(int contactId);
 }

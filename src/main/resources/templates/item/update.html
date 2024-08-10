@@ -7,31 +7,41 @@
 	<div class="detail-box d-flex justify-content-center">
 		<div>
 			<div class="d-flex justify-content-center">
-				<h1 class="m-4 font-weight-bold">세부 페이지</h1>
+				<h1 class="m-4 font-weight-bold">수정 페이지</h1>
 			</div>
+			<form id="itemUpdateForm" method="post" action="/item/update" th:data-item-id="${item.id}">
 				<div class="d-flex justify-content-center mb-5">
 					<div class="col-4"> <!-- 그림 -->
-						<div class="my-3" th:if="${item.imageUrl != null}">
-							<img th:src="${item.imageUrl}" alt="본문 이미지" class="img">
-						</div>
+						<span id="warning">이미지를 새로 올려주셔야합니다.</span>
+						<a href="#" id="fileUplodeBtn"><img src="../img/gallery_add_icon.png" class="img"></a>
+						<input type="file" id="file" name="file" accept=".jpg, .png, .gif" class="d-none">
+						<div id="fileName" class="ml-2"></div>
 					</div>
 					<div class="col-8"> <!-- 품목명들 -->
 						<div class="d-flex m-2">
 							<span class="mr-2 col-3">판매 물품:</span>
-							<span th:text="${item.title}"></span>
+							<input th:value="${item.title}" type="text" id="productName" name="productName" class="form-control col-6 mr-2" placeholder="품목 명을 입력해주세요">
 						</div>
 						<div class="d-flex m-2">
 							<span class="mr-2 col-3">판매 금액:</span>
-							<span th:text="${item.price}"></span>
-							<span>원</span>
+							<input th:value="${item.price}" type="text" id="productPrice" name="productPrice" class="form-control col-6 mr-2" placeholder="판매 금액을 입력해주세요">
+							<span class="mt-2">원</span>
 						</div>
 						<div class="d-flex m-2">
 							<span class="mr-2 col-3">상태 종류:</span>
-							  <span th:text="${item.status}"></span>
+							<select th:value="${item.status}" class="form-control col-3" id="productStatus" name="productStatus">
+							  <option selected value="Selling">판매중</option>
+							  <option value="Reservation">예약중</option>
+							  <option value="Sold">판매완료</option>
+							</select>
 						</div>
 						<div class="d-flex m-2">
 							<span class="mr-2 col-3">물품 종류:</span>
-							<span th:text="${item.type}"></span>
+							<select th:value="${item.type}" class="form-control col-3" id="productValue" name="productValue">
+							  <option selected value="keyboard">키보드</option>
+							  <option value="keycap">키캡</option>
+							  <option value="trade">교환</option>
+							</select>
 						</div>
 					</div> <!-- 품목 명들 끝 -->
 				</div>
@@ -40,62 +50,146 @@
 					<div class="mb-4">
 						<h3>설명글</h3>
 					</div>
-					<textarea rows="10" cols="100" id="writeTextArea" class="w-100 border-0" th:text="${item.content}"></textarea>
+					<textarea th:text="${item.content}" rows="10" cols="100" id="writeTextArea" class="w-100 border-0"></textarea>
 				</div>
 				<br>
-				<div class="d-flex justify-content-center m-3">
-						<a href="#" class="btn btnCheck callBtn" th:data-contact-id="${item.Id}" data-toggle="modal" data-target="#Modal">연락하기</a>
-						<button th:if="${item.userId == session.userId}" id="updateBtn" class="btn btnCheck ml-5">수정하기</button>
-				</div>
-				</div>
-				<div class="modal fade" id="Modal">
-				    <div class="modal-dialog modal-dialog-centered">
-				        <div class="modal-content">
-				            <div class="modal-header">
-				                <h5 class="modal-title">연락하기</h5>
-				                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				                    <span aria-hidden="true">&times;</span>
-				                </button>
-				            </div>
-				            <div class="modal-body" id="modalContent">
-				                <!-- 모달 내용 -->
-				            </div>
-				            <div class="modal-footer">
-				                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-				            </div>
-				        </div>
-				    </div>
-				</div>
+					<div class="d-flex justify-content-center m-3">
+						<button type="submit" id="updateBtn" class="btn btnCheck">설정완료</button>
+					</div>
+			</form>
 		</div>
+	</div>
 </section>
 
 <th:block layout:fragment="script">
 	<script>
-	$(document).ready(function(){
-		$(".callBtn").on("click", function(e){
+	$(document).ready(function() {
+		$("#fileUplodeBtn").on('click', function(e) {
+				// alert("클릭"); 정상작동함
+				e.preventDefault(); // 위로 올라가는 현상 방지
+				
+				$("#file").click(); // 파일을 클릭하게 되는 현상 / input type="file"을 클릭한것과 같다.
+				
+				// 숨겨져있는 파일이 변경이 되는 때에 해야한다. change로 추가 사항 해줘야한다.
+		});
+		
+		$("#file").on('change', function(e) {
+			// 취소를 누를 때, 처리 취소를 누를때도 초기화가 되는 상황에 대해서 처리를 해줘야한다.
+			// 파일이 비워짐으로, 아래쪽에 .name을 할수가 없는 상황인 것이다. (에러 발생)
+			let file = e.target.files[0];
+			if(file == null) {
+				// 없어지긴 하지만, 찝찝하다면, 아예 코드를 써주는것도 좋다.
+				$("#file").val("");
+				$("#fileName").text("");
+				return;
+			}
+			
+			// alert("이미지 변경!"); 정상 작동
+			// target = this와 같은것이다. files[0]= 이미지 자체의 이름
+			let fileName = e.target.files[0].name; // bird-7943041_640.jpg
+			console.log(fileName);
+			
+			// 확장자 validater 유효성 체크
+			// pop으로 잘라서 하나의 string으로 변환
+			let ext = fileName.split(".").pop().toLowerCase();
+			console.log(ext);
+			
+			if (ext != "gif" && ext != "png" && ext != "jpg" && ext != "jpeg") {
+				alert("이미지 파일만 업로드 할수있습니다.");
+				// 1.이미지가 보이는것을 초기화 해야하고, 파일을 담긴것을 초기화 해줘야한다.
+				$("#file").val(""); // 파일 테그에 올라온것 제거, (보이지 않지만 꼭! 처리해야함.) 그 파일도 비우고, 보여지는 파일의 이름도 지워야한다.
+				$("#fileName").text(""); // 보여지고 있는 파일명을 초기화 (제거)
+				return;
+			}
+			$("#fileName").text(fileName);
+			$("#warning").addClass('d-none');
+		});
+		
+		
+		$("#itemUpdateForm").on('submit', function(e) {
 			e.preventDefault();
-			let contactId = $(this).data("contact-id");
-			$("#Modal").data('contact-id', contactId);
-			// console.log(contactId); //확인 완료
+			// alert("form 클릭"); 설정 완료
+			let itemId = $(this).data('item-id');
+			let productName = $("#productName").val().trim();
+			let productPrice = $("#productPrice").val().trim();
+			let productStatus = $("#productStatus").val().trim();
+			let productValue = $("#productValue").val().trim();
+			let writeTextArea = $("#writeTextArea").val();
+			let fileName = $("#file")[0].files[0].name;
+			let ext = fileName.split(".").pop().toLowerCase();
+			
+			// 정상 alert(productName);
+			// 정상 alert(productPrice);
+			// 정상 alert(productStatus);
+			// 정상 alert(productValue);
+			// 정상 alert(writeTextArea);
+			
+			if(!productName) {
+				alert("제품 이름을 기입해주세요.");
+				return false;
+			}
+			
+			if(!productPrice) {
+				alert("제품 가격을 기입해주세요.");
+				return false;
+			}
+			
+			if(!productStatus) {
+				alert("상태 종류를 기입해주세요.");
+				return false;
+			}
+			
+			if(!productValue) {
+				alert("제품 종류를 기입해주세요.");
+				return false;
+			}
+			
+			if(!writeTextArea) {
+				alert("제품 설명을 기입해주세요.");
+				return false;
+			}
+			
+			if (ext != "gif" && ext != "png" && ext != "jpg" && ext != "jpeg") {
+				alert("이미지 파일만 업로드 할수있습니다.");
+				$("#file").val("");
+				$("#fileName").text(""); 
+				return;
+			}
+			
+			
+			
+			let formData = new FormData();
+			formData.append("itemId", itemId);
+			formData.append("productName", productName);
+			formData.append("productPrice", productPrice);
+			formData.append("productStatus", productStatus);
+			formData.append("productValue", productValue);
+			formData.append("writeTextArea", writeTextArea);
+			formData.append("file", $("#file")[0].files[0]);
 			
 			$.ajax({
-				type : "post"
-				, url : "/item/contact"
-				, data : {"contactId" : contactId}
+				type : "put"
+				, url : "/item/update"
+				, data : formData
+				, enctype : "multipart/form-data"
+				, processData : false
+				, contentType : false
+				
 				, success:function(data) {
 					if(data.code == 200) {
-						$('#modalContent').empty();
-						$('#modalContent').append(data.result);
-						$('#Modal').modal('show');
+						alert("제품 등록되었습니다.");
+						location.href="/item/item-list-view";
+					} else if(data.code == 403) { // 비로그인일때 서버 처리를 하게 만들음.
+						location.href="/user/sign-in-view";
 					} else {
-						alert("문제가 발생했습니다.");
+						alert(data.error_message);
 					}
 				}
-				, error:function(e) {
-					alert("열기에 실패하셨습니다.");
+				, error : function(e) {
+					alert("글을 저장하는데 실패했습니다.");
 				}
 			});
-		});
+		}); // form의 끝
 	});
 	</script>
 </th:block>

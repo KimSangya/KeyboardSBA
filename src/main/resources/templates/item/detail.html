@@ -45,7 +45,7 @@
 				<br>
 				<div class="d-flex justify-content-center m-3">
 						<a href="#" class="btn btnCheck callBtn" th:data-contact-id="${item.Id}" data-toggle="modal" data-target="#Modal">연락하기</a>
-						<button th:if="${item.userId == session.userId}" id="updateBtn" class="btn btnCheck ml-5">수정하기</button>
+						<a th:href="|/item/item-update-view?itemId=${item.id}|" th:if="${item.userId == session.userId}" id="updateBtn" class="btn btnCheck ml-5">수정하기</a>
 				</div>
 				</div>
 				<div class="modal fade" id="Modal">
