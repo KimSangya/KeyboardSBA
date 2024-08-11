@@ -1,14 +1,105 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
-<head>
-    <meta charset="utf-8">
-    <title></title>
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-</head>
-<body>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="detail-box d-flex justify-content-center">
+		<div>
+			<div class="d-flex justify-content-center">
+				<h1 class="m-4 font-weight-bold">세부 페이지</h1>
+			</div>
+				<div class="d-flex justify-content-center mb-5">
+					<div class="col-4"> <!-- 그림 -->
+						<div class="my-3" th:if="${item.imageUrl != null}">
+							<img th:src="${item.imageUrl}" alt="본문 이미지" class="img">
+						</div>
+					</div>
+					<div class="col-8"> <!-- 품목명들 경매 -->
+						<div class="d-flex m-2">
+							<span class="mr-2 col-3">판매 물품:</span>
+							<span th:text="${item.title}"></span>
+						</div>
+						<div class="d-flex m-2">
+							<span class="mr-2 col-3">판매 금액:</span>
+							<span th:text="${item.price}"></span>
+							<span>원</span>
+						</div>
+						<div class="d-flex m-2">
+							<span class="mr-2 col-3">상태 종류:</span>
+							  <span th:text="${item.status}"></span>
+						</div>
+						<div class="d-flex m-2">
+							<span class="mr-2 col-3">물품 종류:</span>
+							<span th:text="${item.type}"></span>
+						</div>
+						<div class="d-flex m-2">
+							<span class="mr-2 col-3">남은 시간:</span>
+							<span th:text="${#temporals.format(item.time, 'yyyy년 MM월 dd일  HH시 mm분')}"></span>
+						</div>
+					</div> <!-- 품목 명들 끝 -->
+				</div>
+				
+				<div>
+					<div class="mb-4">
+						<h3>설명글</h3>
+					</div>
+					<textarea rows="10" cols="100" id="writeTextArea" class="w-100 border-0" th:text="${item.content}"></textarea>
+				</div>
+				<br>
+				<div class="d-flex justify-content-center m-3">
+						<a href="#" class="btn btnCheck callBtn" th:data-contact-id="${item.Id}" data-toggle="modal" data-target="#Modal">연락하기</a>
+						<a th:href="|/item/item-update-view?itemId=${item.id}|" th:if="${item.userId == session.userId}" id="updateBtn" class="btn btnCheck ml-5">수정하기</a>
+				</div>
+				</div>
+				<div class="modal fade" id="Modal">
+				    <div class="modal-dialog modal-dialog-centered">
+				        <div class="modal-content">
+				            <div class="modal-header">
+				                <h5 class="modal-title">연락하기</h5>
+				                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				                    <span aria-hidden="true">&times;</span>
+				                </button>
+				            </div>
+				            <div class="modal-body" id="modalContent">
+				                <!-- 모달 내용 -->
+				            </div>
+				            <div class="modal-footer">
+				                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+		</div>
+</section>
 
-</body>
-</html>
+<th:block layout:fragment="script">
+	<script>
+	$(document).ready(function(){
+		$(".callBtn").on("click", function(e){
+			e.preventDefault();
+			let contactId = $(this).data("contact-id");
+			$("#Modal").data('contact-id', contactId);
+			// console.log(contactId); //확인 완료
+			
+			$.ajax({
+				type : "post"
+				, url : "/item/contact"
+				, data : {"contactId" : contactId}
+				, success:function(data) {
+					if(data.code == 200) {
+						$('#modalContent').empty();
+						$('#modalContent').append(data.result);
+						$('#Modal').modal('show');
+					} else {
+						alert("문제가 발생했습니다.");
+					}
+				}
+				, error:function(e) {
+					alert("열기에 실패하셨습니다.");
+				}
+			});
+		});
+	});
+	</script>
+</th:block>

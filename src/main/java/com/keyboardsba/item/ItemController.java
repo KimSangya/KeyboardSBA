@@ -28,10 +28,12 @@ public class ItemController {
 		List<Item> itemKeyBoardList = itemBO.getItemListByType("keyboard"); 
 		List<Item> itemKeyCapList = itemBO.getItemListByType("keycap"); 
 		List<Item> itemKeyTradeList = itemBO.getItemListByType("trade"); 
-		
+		List<Item> auctionList = itemBO.getItemListByType("auction");
+
 		model.addAttribute("itemKeyBoardList", itemKeyBoardList);
 		model.addAttribute("itemKeyCapList", itemKeyCapList);
 		model.addAttribute("itemKeyTradeList", itemKeyTradeList);
+		model.addAttribute("auctionList", auctionList);
 		
 		return "item/itemList";
 	}

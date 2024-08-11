@@ -58,6 +58,9 @@
 			,`price`
 			,`status`
 			,`type`
+			<if test="time != null">
+			,`time`
+			</if>
 			,`content`
 			,`imageUrl`
 		FROM
