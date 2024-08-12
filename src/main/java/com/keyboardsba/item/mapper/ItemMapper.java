@@ -30,6 +30,7 @@ public interface ItemMapper {
 			@Param("productStatus") String productStatus, 
 			@Param("productValue") String productValue, 
 			@Param("writeTextArea") String writeTextArea, 
+			@Param("time") String time,
 			@Param("imagePath") String imagePath);
 	
 	public List<Item> selectItemListByType(String type);

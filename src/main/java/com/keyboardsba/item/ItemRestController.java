@@ -85,6 +85,7 @@ public class ItemRestController {
 			@RequestParam("productStatus") String productStatus,
 			@RequestParam("productValue") String productValue,
 			@RequestParam("writeTextArea") String writeTextArea,
+			@RequestParam(value = "time", required = false) String time,
 			@RequestParam("file") MultipartFile file,
 			HttpSession session) {
 		
@@ -102,7 +103,7 @@ public class ItemRestController {
 		
 		// db 처리
 		itemBO.updateItem(itemId, userId, loginId, productName, productPrice, productStatus, productValue,
-				writeTextArea, file);
+				writeTextArea, time, file);
 		
 		result.put("code", 200);
 		result.put("result", "성공");

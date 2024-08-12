@@ -17,11 +17,11 @@
 					</div>
 					<div class="col-8"> <!-- 품목명들 경매 -->
 						<div class="d-flex m-2">
-							<span class="mr-2 col-3">판매 물품:</span>
+							<span class="mr-2 col-3">경매 물품:</span>
 							<span th:text="${item.title}"></span>
 						</div>
 						<div class="d-flex m-2">
-							<span class="mr-2 col-3">판매 금액:</span>
+							<span class="mr-2 col-3">시작 금액:</span>
 							<span th:text="${item.price}"></span>
 							<span>원</span>
 						</div>
@@ -31,7 +31,7 @@
 						</div>
 						<div class="d-flex m-2">
 							<span class="mr-2 col-3">물품 종류:</span>
-							<span th:text="${item.type}"></span>
+							  <span th:text="${item.type}"></span>
 						</div>
 						<div class="d-flex m-2">
 							<span class="mr-2 col-3">남은 시간:</span>
@@ -43,13 +43,27 @@
 				<div>
 					<div class="mb-4">
 						<h3>설명글</h3>
+						<a href="#" class="btn btnCheck callBtn mr-3">입찰</a>
+						<a href="#" class="btn btnRed callBtn">채팅</a>
 					</div>
-					<textarea rows="10" cols="100" id="writeTextArea" class="w-100 border-0" th:text="${item.content}"></textarea>
+					<div class="card-comment-list m-2">
+					<!-- 댓글들 -->
+						<div class="card-comment m-1">
+								<span class="font-weight-bold" >댓글쓰니</span>
+								<span>댓글 내용임</span>
+						</div>
+						
+						<!-- 댓글 쓰기 -->
+						<div class="comment-write d-flex border-top mt-2">
+							<input type="text" class="comment-input form-control border-0 mr-2" placeholder="댓글 달기">
+							<button type="button" class="comment-btn btn btn-light">게시</button>
+						</div>
+					</div>
 				</div>
 				<br>
 				<div class="d-flex justify-content-center m-3">
 						<a href="#" class="btn btnCheck callBtn" th:data-contact-id="${item.Id}" data-toggle="modal" data-target="#Modal">연락하기</a>
-						<a th:href="|/item/item-update-view?itemId=${item.id}|" th:if="${item.userId == session.userId}" id="updateBtn" class="btn btnCheck ml-5">수정하기</a>
+						<a th:href="|/auction/auction-update-view?itemId=${item.id}|" th:if="${item.userId == session.userId}" id="updateBtn" class="btn btnCheck ml-5">수정하기</a>
 				</div>
 				</div>
 				<div class="modal fade" id="Modal">

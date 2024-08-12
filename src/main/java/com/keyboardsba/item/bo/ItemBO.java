@@ -41,7 +41,7 @@ public class ItemBO {
 	}
 	
 	public void updateItem(int itemId, int userId, String loginId, String productName, int productPrice, 
-			String productStatus, String productValue, String writeTextArea, MultipartFile file) {
+			String productStatus, String productValue, String writeTextArea, String time, MultipartFile file) {
 			
 			Item item = itemMapper.selectItemByItemIdAndUserId(itemId, userId);
 			
@@ -60,7 +60,7 @@ public class ItemBO {
 				}
 			}
 			
-			itemMapper.updateItem(itemId, userId, loginId, productName, productPrice, productStatus, productValue, writeTextArea, imagePath);
+			itemMapper.updateItem(itemId, userId, loginId, productName, productPrice, productStatus, productValue, writeTextArea, time, imagePath);
 		}
 	
 	public List<Item> getItemListByType(String type) {

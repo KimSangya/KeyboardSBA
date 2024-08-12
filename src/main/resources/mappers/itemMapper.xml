@@ -13,7 +13,9 @@
 			,`status`
 			,`type`
 			,`content`
-			, `time`
+			<if test="time != null">
+			,`time`
+			</if>
 			,`imageUrl`
 			,`createdAt`
 			,`updatedAt`
@@ -23,11 +25,13 @@
 			#{userId}
 			, #{loginId}
 			, #{productName}
-			, #{productPrice}45
+			, #{productPrice}
 			, #{productStatus}
 			, #{productValue}
 			, #{writeTextArea}
-			, NULL
+			<if test="time != null">
+			, #{time}
+			</if>
 			, #{imagePath}
 			, NOW()
 			, NOW()
@@ -79,6 +83,7 @@
 			,`status`
 			,`content`
 			,`type`
+			,`time`
 			,`content`
 			,`imageUrl`
 		FROM
@@ -105,6 +110,9 @@
 			, `status` = #{productStatus}
 			, `type` = #{productValue}
 			, `content` = #{writeTextArea}
+			<if test="time != null">
+			,`time`= #{time}
+			</if>
 			<if test="imagePath != null"> <!-- 업로드가 실패했거나 업로드가 안됐거나.. -->
 			, `imageUrl` = #{imagePath}
 			</if>

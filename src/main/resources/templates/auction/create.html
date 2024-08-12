@@ -22,7 +22,7 @@
 							<input type="text" id="productName" name="productName" class="form-control col-6 mr-2" placeholder="품목 명을 입력해주세요">
 						</div>
 						<div class="d-flex m-2">
-							<span class="mr-2 col-3">판매 금액:</span>
+							<span class="mr-2 col-3">시작 금액:</span>
 							<input type="text" id="productPrice" name="productPrice" class="form-control col-6 mr-2" placeholder="판매 금액을 입력해주세요">
 							<span class="mt-2">원</span>
 						</div>
@@ -40,11 +40,12 @@
 							  <option selected value="keyboard">키보드</option>
 							  <option value="keycap">키캡</option>
 							  <option value="trade">교환</option>
+							  <option value="auction">경매</option>
 							</select>
 						</div>
 						<div class="d-flex m-2">
 							<span class="mr-2 col-3">마감 시간:</span>
-							<input type="text" class="form-control datetimepicker" name="datetimepicker">
+							<input type="text" id="time" class="form-control datetimepicker" name="datetimepicker">
 						</div>
 					</div> <!-- 품목 명들 끝 -->
 				</div>
@@ -126,6 +127,7 @@
 			let writeTextArea = $("#writeTextArea").val();
 			let fileName = $("#file")[0].files[0].name;
 			let ext = fileName.split(".").pop().toLowerCase();
+			let time = $("#time").val();
 			
 			// 정상 alert(productName);
 			// 정상 alert(productPrice);
@@ -162,9 +164,13 @@
 				alert("이미지 파일만 업로드 할수있습니다.");
 				$("#file").val("");
 				$("#fileName").text(""); 
-				return;
+				return false;
 			}
 			
+			if(!time) {
+				alert("시간을 입력해주세요.");
+				return false;
+			}
 			
 			
 			let formData = new FormData();
@@ -173,11 +179,12 @@
 			formData.append("productStatus", productStatus);
 			formData.append("productValue", productValue);
 			formData.append("writeTextArea", writeTextArea);
+			formData.append("time", time);
 			formData.append("file", $("#file")[0].files[0]);
 			
 			$.ajax({
 				type : "post"
-				, url : "/item/create"
+				, url : "/auction/create"
 				, data : formData
 				, enctype : "multipart/form-data"
 				, processData : false

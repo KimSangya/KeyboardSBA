@@ -51,4 +51,23 @@ public class AuctionController {
 		model.addAttribute("item", item);
 		return "auction/detail";
 	}
+	
+	@GetMapping("/auction-update-view")
+	public String Update(
+			@RequestParam("itemId") int itemId,
+			Model model, HttpSession session ) {
+		
+		Integer userId = (Integer)session.getAttribute("userId");
+		
+		if(userId == null) {
+			return "redirect:/";
+		}
+		
+		Item item = auctionBO.getItemByItemIdAndUserId(itemId, userId);
+		
+		model.addAttribute("item", item);
+		
+		return "auction/update";
+	
+	}
 }
