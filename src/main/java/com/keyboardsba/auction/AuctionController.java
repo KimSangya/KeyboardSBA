@@ -70,4 +70,14 @@ public class AuctionController {
 		return "auction/update";
 	
 	}
+	
+	@GetMapping("/chat") 
+	public String chat() {
+		return "auction/chat";
+	}
+	
+	@GetMapping("/paid") 
+	public String paid() {
+		return "auction/paid";
+	}
 }

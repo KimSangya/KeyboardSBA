@@ -17,24 +17,24 @@
 					</div>
 					<div class="col-8"> <!-- 품목명들 경매 -->
 						<div class="d-flex m-2">
-							<span class="mr-2 col-3">경매 물품:</span>
+							<span class="mr-2 col-4">경매 물품:</span>
 							<span th:text="${item.title}"></span>
 						</div>
 						<div class="d-flex m-2">
-							<span class="mr-2 col-3">시작 금액:</span>
+							<span class="mr-2 col-4">시작 금액:</span>
 							<span th:text="${item.price}"></span>
 							<span>원</span>
 						</div>
 						<div class="d-flex m-2">
-							<span class="mr-2 col-3">상태 종류:</span>
+							<span class="mr-2 col-4">상태 종류:</span>
 							  <span th:text="${item.status}"></span>
 						</div>
 						<div class="d-flex m-2">
-							<span class="mr-2 col-3">물품 종류:</span>
+							<span class="mr-2 col-4">물품 종류:</span>
 							  <span th:text="${item.type}"></span>
 						</div>
 						<div class="d-flex m-2">
-							<span class="mr-2 col-3">남은 시간:</span>
+							<span class="mr-2 col-4">남은 시간:</span>
 							<span th:text="${#temporals.format(item.time, 'yyyy년 MM월 dd일  HH시 mm분')}"></span>
 						</div>
 					</div> <!-- 품목 명들 끝 -->
@@ -43,21 +43,11 @@
 				<div>
 					<div class="mb-4">
 						<h3>설명글</h3>
-						<a href="#" class="btn btnCheck callBtn mr-3">입찰</a>
-						<a href="#" class="btn btnRed callBtn">채팅</a>
+						<a href="#" class="btn btnCheck paidBtn mr-3">입찰</a>
+						<a href="#" class="btn btnRed chatBtn">채팅</a>
 					</div>
-					<div class="card-comment-list m-2">
-					<!-- 댓글들 -->
-						<div class="card-comment m-1">
-								<span class="font-weight-bold" >댓글쓰니</span>
-								<span>댓글 내용임</span>
-						</div>
+					<div class="chooseChat m-2">
 						
-						<!-- 댓글 쓰기 -->
-						<div class="comment-write d-flex border-top mt-2">
-							<input type="text" class="comment-input form-control border-0 mr-2" placeholder="댓글 달기">
-							<button type="button" class="comment-btn btn btn-light">게시</button>
-						</div>
 					</div>
 				</div>
 				<br>
@@ -112,6 +102,42 @@
 				, error:function(e) {
 					alert("열기에 실패하셨습니다.");
 				}
+			});
+		});
+		
+		$(".chatBtn").on("click", function() {
+			// alert("채팅 알림 눌림");
+			$(".chatBtn").removeClass("btnRed");
+			$(".chatBtn").addClass("btnCheck");
+			$(".paidBtn").removeClass("btnCheck");
+			$(".paidBtn").addClass("btnRed");
+			
+			$.ajax({
+				url : "/auction/chat"
+				, success:function(data) {
+					$(".chooseChat").html(data);
+				}
+				, error:function() {
+					alert("문제가 발생하였습니다.");
+				} 
+			});
+		});
+		
+		$(".paidBtn").on("click", function() {
+			// alert("배팅 알림 눌림");
+			$(".paidBtn").removeClass("btnRed");
+			$(".paidBtn").addClass("btnCheck");
+			$(".chatBtn").removeClass("btnCheck");
+			$(".chatBtn").addClass("btnRed");
+			
+			$.ajax({
+				url : "/auction/paid"
+				, success:function(data) {
+					$(".chooseChat").html(data);
+				}
+				, error:function() {
+					alert("문제가 발생하였습니다.");
+				} 
 			});
 		});
 	});
