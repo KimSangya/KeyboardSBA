@@ -43,8 +43,8 @@
 				<div>
 					<div class="mb-4">
 						<h3>설명글</h3>
-						<a href="#" class="btn btnCheck paidBtn mr-3">입찰</a>
-						<a href="#" class="btn btnRed chatBtn">채팅</a>
+						<a href="#" class="btn btnRed paidBtn mr-3" th:data-paid-id="${item.id}">입찰</a>
+						<a href="#" class="btn btnRed chatBtn" th:data-chat-id="${item.id}">채팅</a>
 					</div>
 					<div class="chooseChat m-2">
 						
@@ -105,8 +105,11 @@
 			});
 		});
 		
-		$(".chatBtn").on("click", function() {
-			// alert("채팅 알림 눌림");
+		$(".chatBtn").on("click", function(e) {
+			e.preventDefault();
+			let chatId = $(this).data('chat-id');
+			alert("채팅 알림 눌림");
+			
 			$(".chatBtn").removeClass("btnRed");
 			$(".chatBtn").addClass("btnCheck");
 			$(".paidBtn").removeClass("btnCheck");
@@ -114,6 +117,7 @@
 			
 			$.ajax({
 				url : "/auction/chat"
+				, data : {"chatId" : chatId}
 				, success:function(data) {
 					$(".chooseChat").html(data);
 				}
@@ -123,7 +127,10 @@
 			});
 		});
 		
-		$(".paidBtn").on("click", function() {
+		$(".paidBtn").on("click", function(e) {
+			e.preventDefault();
+			let paidId = $(this).data('paid-id');
+			
 			// alert("배팅 알림 눌림");
 			$(".paidBtn").removeClass("btnRed");
 			$(".paidBtn").addClass("btnCheck");
@@ -132,12 +139,13 @@
 			
 			$.ajax({
 				url : "/auction/paid"
+				, data : {"paidId" : paidId}
 				, success:function(data) {
 					$(".chooseChat").html(data);
 				}
 				, error:function() {
 					alert("문제가 발생하였습니다.");
-				} 
+				}
 			});
 		});
 	});

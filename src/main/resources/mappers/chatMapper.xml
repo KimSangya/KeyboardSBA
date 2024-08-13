@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.keyboardsba.chat.mapper.ChatMapper">
+ 	<insert id="insertChat" parameterType="map">
+ 		INSERT INTO `comment`
+ 		(
+ 			`userId`
+			,`itemId`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{userId}
+ 			,#{itemId}
+ 			,#{content}
+ 			,NOW()
+ 			,NOW()
+ 		)
+ 	</insert>
+ 	
+ 	<select id="selectChatList" parameterType="int" resultType="com.keyboardsba.chat.domain.Chat">
+ 		SELECT
+ 			`id`
+			,`userId`
+			,`itemId`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`comment`
+		WHERE
+		`id` = #{itemId}
+ 	</select>
+ </mapper>

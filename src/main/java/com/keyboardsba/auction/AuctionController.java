@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.keyboardsba.auction.bo.AuctionBO;
 import com.keyboardsba.auction.domain.Auction;
+import com.keyboardsba.chat.domain.Chat;
 import com.keyboardsba.item.domain.Item;
 
 import jakarta.servlet.http.HttpSession;
@@ -72,12 +73,24 @@ public class AuctionController {
 	}
 	
 	@GetMapping("/chat") 
-	public String chat() {
+	public String chat(@RequestParam("chatId") int itemId,
+			Model model, HttpSession session) {
+		
+		Item item = auctionBO.getItemByItemId(itemId);
+		List<Chat> chatList = auctionBO.getChatListByItemId(itemId);
+		
+		model.addAttribute("item", item);
+		model.addAttribute("chatList", chatList);
+		
 		return "auction/chat";
 	}
 	
 	@GetMapping("/paid") 
-	public String paid() {
+	public String paid(@RequestParam("paidId") int itemId,
+			Model model, HttpSession session) {
+		
+		Item item = auctionBO.getItemByItemId(itemId);
+		model.addAttribute("item", item);
 		return "auction/paid";
 	}
 }

@@ -1,12 +1,61 @@
-<!-- 댓글들 -->
-<div class="card-comment m-1">
-	<h4>채팅 페이지</h4>
-	<span class="font-weight-bold" >댓글쓰니</span>
-	<span>댓글 내용임</span>
+<div>
+	<div class="card-comment m-1" th:each="chat : ${chatList}">
+		<h4>채팅 페이지</h4>
+		<span class="font-weight-bold" th:text="${chat.userId}">댓글쓰니</span>
+		<span th:text="${chat.comment}">댓글 내용임</span>
+	</div>
+	
+	<div class="comment-write d-flex border-top mt-2">
+		<input type="text" class="comment-input form-control border-0 mr-2" placeholder="댓글 달기">
+		<button type="button" class="talk btn btn-light" th:data-user-id="${session.userId}" th:data-item-id="${item.id}">게시</button>
+	</div>
 </div>
-<!-- 댓글 쓰기 -->
-<div class="comment-write d-flex border-top mt-2">
-	<input type="text" class="comment-input form-control border-0 mr-2" placeholder="댓글 달기">
-	<button type="button" class="comment-btn btn btn-light">게시</button>
-</div>
-					
+				
+<th:block layout:fragment="script">
+	<script>
+		$(".talk").on("click", function(){
+			 // alert("채팅 댓글 버튼 클릭");
+			 let userId = $(this).data('user-id');
+			 
+			 if(!userId) {
+				alert("로그인을 해주세요");
+				location.href="/user/sign-in-view";
+				return;
+			 }
+			 
+			 let itemId = $(this).data('item-id');
+			 
+			 console.log(userId);
+			 console.log(itemId);
+			 
+			 let content = $(this).siblings(".comment-input").val().trim();
+			 
+			 console.log(content);
+			 
+			 if(!content) {
+					alert("댓글내용을 작성해야합니다.");
+					return;
+			 }
+			
+			 $.ajax({
+					type:"post"
+					, url : "/chat/create"
+					, data : {"itemId":itemId, "content":content}
+					, success:function(data) {
+						if(data.code == 200) {
+							location.reload(true);
+						} else if(data.code == 403) {
+							// 비로그인
+							alert(data.error_message);
+							location.href="/user/sign-in-view";
+						} else {
+							alert(data.error_message);
+						}
+					}
+					, error:function(e) {
+							alert("댓글쓰기에 실패하였습니다.")
+					}
+				});
+		});
+	</script>
+</th:block>
