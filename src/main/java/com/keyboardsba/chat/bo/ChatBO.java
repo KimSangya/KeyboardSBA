@@ -15,8 +15,8 @@ public class ChatBO {
 	private ChatMapper chatMapper;
 	
 	
-	public void addChat(int itemId, int userId, String content) {
-		chatMapper.insertChat(itemId, userId, content);
+	public void addChat(int itemId, int userId, String loginId, String content) {
+		chatMapper.insertChat(itemId, userId, loginId, content);
 	}
 	
 	public List<Chat> getChatListByItemId(int itemId) {

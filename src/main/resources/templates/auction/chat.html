@@ -1,13 +1,14 @@
 <div>
-	<div class="card-comment m-1" th:each="chat : ${chatList}">
-		<h4>채팅 페이지</h4>
-		<span class="font-weight-bold" th:text="${chat.userId}">댓글쓰니</span>
-		<span th:text="${chat.comment}">댓글 내용임</span>
+	<div class="outline">
+		<h4 class="ml-2">채팅</h4>
+		<div th:each="chat : ${chatList}" class="ml-2">
+			<span class="font-weight-bold" th:text="${chat.loginId}">댓글쓰니</span>
+			<span th:text="${chat.content}">댓글 내용임</span>
+		</div>
 	</div>
-	
 	<div class="comment-write d-flex border-top mt-2">
-		<input type="text" class="comment-input form-control border-0 mr-2" placeholder="댓글 달기">
-		<button type="button" class="talk btn btn-light" th:data-user-id="${session.userId}" th:data-item-id="${item.id}">게시</button>
+			<input type="text" class="comment-input form-control border-0 mr-2" placeholder="댓글 달기">
+			<button type="button" class="talk btn btn-light" th:data-user-id="${session.userId}" th:data-item-id="${item.id}">게시</button>
 	</div>
 </div>
 				

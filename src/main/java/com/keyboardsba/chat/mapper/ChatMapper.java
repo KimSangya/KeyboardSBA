@@ -13,6 +13,7 @@ public interface ChatMapper {
 	public void insertChat(
 			@Param("itemId") int itemId,
 			@Param("userId") int userId,
+			@Param("loginId") String loginId,
 			@Param("content") String content);
 	
 	public List<Chat> selectChatList(int itemId);

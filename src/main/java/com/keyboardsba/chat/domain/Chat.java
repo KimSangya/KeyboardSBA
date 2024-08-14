@@ -10,7 +10,7 @@ import lombok.ToString;
 public class Chat {
 
 	private int id;
-	private int userId;
+	private String loginId;
 	private int itemId;
 	private String content;
 	private LocalDateTime createdAt;
