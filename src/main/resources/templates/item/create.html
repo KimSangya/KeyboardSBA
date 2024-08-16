@@ -110,7 +110,6 @@
 			let productStatus = $("#productStatus").val().trim();
 			let productValue = $("#productValue").val().trim();
 			let writeTextArea = $("#writeTextArea").val();
-			let time = null;
 			let fileName = $("#file")[0].files[0].name;
 			let ext = fileName.split(".").pop().toLowerCase();
 			
@@ -159,7 +158,6 @@
 			formData.append("productPrice", productPrice);
 			formData.append("productStatus", productStatus);
 			formData.append("productValue", productValue);
-			formData.append("time", time);
 			formData.append("writeTextArea", writeTextArea);
 			formData.append("file", $("#file")[0].files[0]);
 			

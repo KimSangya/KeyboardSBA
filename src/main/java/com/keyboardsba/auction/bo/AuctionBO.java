@@ -44,4 +44,9 @@ public class AuctionBO {
 	public List<Chat> getChatListByItemId(int itemId) {
 		return chatBO.getChatListByItemId(itemId);
 	}
+	
+	public void addItem(int userId, String loginId, String productName, int productPrice, String productStatus, String productValue,
+			String writeTextArea, String time, MultipartFile file) {
+		itemBO.addItem(userId, loginId, productName, productPrice, productStatus, productValue, writeTextArea, time, file);
+	}
 }

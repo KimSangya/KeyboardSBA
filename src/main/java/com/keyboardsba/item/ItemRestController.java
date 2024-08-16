@@ -49,7 +49,7 @@ public class ItemRestController {
 		
 		// db 처리
 		itemBO.addItem(userId, loginId, productName, productPrice, productStatus, productValue,
-				writeTextArea, file);
+				writeTextArea, null, file);
 		
 		result.put("code", 200);
 		result.put("result", "성공");

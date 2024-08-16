@@ -41,6 +41,7 @@
 	<select id="selectItemListByType" parameterType="String" resultType="com.keyboardsba.item.domain.Item">
 		SELECT
 			`id`
+			,`userId`
 			,`loginId`
 			,`title`
 			,`price`

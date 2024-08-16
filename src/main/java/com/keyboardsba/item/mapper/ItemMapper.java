@@ -17,7 +17,8 @@ public interface ItemMapper {
 			@Param("productName") String productName, 
 			@Param("productPrice") int productPrice, 
 			@Param("productStatus") String productStatus, 
-			@Param("productValue") String productValue, 
+			@Param("productValue") String productValue,
+			@Param("time") String time,
 			@Param("writeTextArea") String writeTextArea, 
 			@Param("imagePath") String imagePath);
 	

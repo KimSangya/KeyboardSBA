@@ -30,14 +30,14 @@ public class ItemBO {
 	
 	
 	public void addItem(int userId, String loginId, String productName, int productPrice, 
-		String productStatus, String productValue, String writeTextArea, MultipartFile file) {
+		String productStatus, String productValue, String writeTextArea, String time, MultipartFile file) {
 		
 		String imagePath = null;
 		if(file != null) {
 			imagePath = fileManagerService.uploadFile(file, loginId);
 		}
 		
-		itemMapper.insertItem(userId, loginId, productName, productPrice, productStatus, productValue, writeTextArea, imagePath);
+		itemMapper.insertItem(userId, loginId, productName, productPrice, productStatus, productValue, time, writeTextArea, imagePath);
 	}
 	
 	public void updateItem(int itemId, int userId, String loginId, String productName, int productPrice, 

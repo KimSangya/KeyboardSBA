@@ -1,12 +1,14 @@
 <div>
-	<div class="card-comment m-1">
-		<h4>입찰 페이지</h4>
-		<span class="font-weight-bold">댓글쓰니</span>
-		<span>댓글 내용임</span>
+	<div class="outline">
+		<h4 class="ml-2">입찰</h4>
+		<div class="ml-2">
+			<span class="font-weight-bold">댓글쓰니</span>
+			<span>댓글 내용임</span>
+		</div>
 	</div>
 	
 	<div class="comment-write d-flex border-top mt-2">
-		<input type="text" class="comment-input form-control border-0 mr-2" placeholder="댓글 달기">
+		<input type="text" class="comment-input form-control border-0 mr-2" placeholder="금액 작성">
 		<button type="button" class="buy btn btn-light" th:data-user-id="${session.userId}" th:data-item-id="${item.id}">게시</button>
 	</div>
 </div>

@@ -44,7 +44,8 @@
 					, data : {"itemId":itemId, "content":content}
 					, success:function(data) {
 						if(data.code == 200) {
-							location.reload(true);
+							location.reload();
+							$(".chooseChat").html(data);
 						} else if(data.code == 403) {
 							// 비로그인
 							alert(data.error_message);
