@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.keyboardsba.auction.mapper.AuctionMapper">
+ 	<select id="selectAuctionListByItemId" parameterType="int" resultType="com.keyboardsba.auction.domain.Auction">
+ 	SELECT
+ 		`id`
+		,`loginId`
+		,`itemId`
+		,`paid`
+		,`createdAt`
+		,`updatedAt`
+ 	FROM
+ 		`auction`
+ 	WHERE
+ 		`itemId` = #{itemId}
+ 	</select>
+ 	
+ 	<insert id="insertPaid" parameterType="map">
+ 		INSERT INTO `auction`
+ 		(
+ 			`userId`
+ 			,`loginId`
+			,`itemId`
+			,`paid`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{userId}
+ 			,#{loginId}
+ 			,#{itemId}
+ 			,#{paid}
+ 			,NOW()
+ 			,NOW()
+ 		)
+ 	</insert>
+ </mapper>

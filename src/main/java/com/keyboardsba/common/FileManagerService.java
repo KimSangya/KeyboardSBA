@@ -15,8 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 @Component 
 public class FileManagerService {
 	 // public static final String FILE_UPLOAD_PATH = "D:\\kimgeonho\\6_spring_project\\keyboardSBA\\workspace\\images/"; // 학원
-	 // public static final String FILE_UPLOAD_PATH = "D:\\KimGeonHo\\6_springProject\\keyboardSBA\\workspace\\images/"; // 집, 상수라는 의미
-	 public static final String FILE_UPLOAD_PATH = "E:\\kimgeonho\\6_SpringProject\\KeyboardSBA\\workspace\\images/";
+	  public static final String FILE_UPLOAD_PATH = "D:\\KimGeonHo\\6_springProject\\keyboardSBA\\workspace\\images/"; // 노트북, 상수라는 의미
+	 // public static final String FILE_UPLOAD_PATH = "E:\\kimgeonho\\6_SpringProject\\KeyboardSBA\\workspace\\images/"; // 데탑
 	
 	
 	public String uploadFile(MultipartFile file, String loginId) {

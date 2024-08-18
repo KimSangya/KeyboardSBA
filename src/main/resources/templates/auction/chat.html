@@ -8,7 +8,7 @@
 	</div>
 	<div class="comment-write d-flex border-top mt-2">
 			<input type="text" class="comment-input form-control border-0 mr-2" placeholder="댓글 달기">
-			<button type="button" class="talk btn btn-light" th:data-user-id="${session.userId}" th:data-item-id="${item.id}">게시</button>
+			<button type="button" class="talk btn btn-light"  th:data-user-id="${session.userId}" th:data-item-id="${item.id}">게시</button>
 	</div>
 </div>
 				
@@ -44,8 +44,16 @@
 					, data : {"itemId":itemId, "content":content}
 					, success:function(data) {
 						if(data.code == 200) {
-							location.reload();
-							$(".chooseChat").html(data);
+							$.ajax({
+								url : "/auction/chat"
+								, data : {"chatId" : itemId}
+								, success:function(data) {
+									$(".chooseChat").html(data);
+								}
+								, error:function() {
+									alert("문제가 발생하였습니다.");
+								} 
+							});
 						} else if(data.code == 403) {
 							// 비로그인
 							alert(data.error_message);

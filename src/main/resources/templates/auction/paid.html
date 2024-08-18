@@ -1,14 +1,14 @@
 <div>
 	<div class="outline">
 		<h4 class="ml-2">입찰</h4>
-		<div class="ml-2">
-			<span class="font-weight-bold">댓글쓰니</span>
-			<span>댓글 내용임</span>
+		<div th:each="paid : ${paidList}" class="ml-2">
+			<span class="font-weight-bold" th:text="${paid.loginId}">댓글쓰니</span>
+			<span th:text="|${paid.paid}원 입찰|">댓글 내용임</span>
 		</div>
 	</div>
 	
 	<div class="comment-write d-flex border-top mt-2">
-		<input type="text" class="comment-input form-control border-0 mr-2" placeholder="금액 작성">
+		<input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="comment-input form-control border-0 mr-2" placeholder="금액 작성">
 		<button type="button" class="buy btn btn-light" th:data-user-id="${session.userId}" th:data-item-id="${item.id}">게시</button>
 	</div>
 </div>
@@ -38,11 +38,20 @@
 			 }
 			 $.ajax({
 				type:"post"
-				, url : "/paid/create"
+				, url : "/auction/paid"
 				, data : {"itemId":itemId, "content":content}
 				, success:function(data) {
 					if(data.code == 200) {
-						location.reload(true);
+						$.ajax({
+							url : "/auction/paid"
+							, data : {"paidId" : itemId}
+							, success:function(data) {
+								$(".chooseChat").html(data);
+							}
+							, error:function() {
+								alert("문제가 발생하였습니다.");
+							} 
+						});
 					} else if(data.code == 403) {
 						// 비로그인
 						alert(data.error_message);

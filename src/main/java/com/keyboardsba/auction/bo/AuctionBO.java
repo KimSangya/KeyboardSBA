@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.keyboardsba.auction.domain.Auction;
+import com.keyboardsba.auction.mapper.AuctionMapper;
 import com.keyboardsba.chat.bo.ChatBO;
 import com.keyboardsba.chat.domain.Chat;
 import com.keyboardsba.common.FileManagerService;
@@ -23,6 +25,9 @@ public class AuctionBO {
 	
 	@Autowired
 	private ChatBO chatBO;
+	
+	@Autowired
+	private AuctionMapper auctionMapper;
 	
 	public List<Item> getItemListByType(String type) {
 		return itemBO.getItemListByType(type);
@@ -48,5 +53,13 @@ public class AuctionBO {
 	public void addItem(int userId, String loginId, String productName, int productPrice, String productStatus, String productValue,
 			String writeTextArea, String time, MultipartFile file) {
 		itemBO.addItem(userId, loginId, productName, productPrice, productStatus, productValue, writeTextArea, time, file);
+	}
+	
+	public List<Auction> getAuctionListByItemId(int itemId) {
+		return auctionMapper.selectAuctionListByItemId(itemId);
+	}
+	
+	public void addPaid(int itemId, int userId, String loginId, int paid) {
+		auctionMapper.insertPaid(itemId, userId, loginId, paid);
 	}
 }

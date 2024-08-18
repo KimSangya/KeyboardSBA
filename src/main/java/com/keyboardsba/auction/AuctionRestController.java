@@ -91,4 +91,30 @@ public class AuctionRestController {
 		
 		return result;
 	}
+	
+	@PostMapping("/paid")
+	public Map<String, Object> paid(
+			@RequestParam("itemId") int itemId,
+			@RequestParam("content") String content,
+			HttpSession session) {
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		Integer userId = (Integer)session.getAttribute("userId");
+		String loginId = (String)session.getAttribute("loginId");
+		
+		if(userId == null) {
+			result.put("code", 403);
+			result.put("error_message", "로그인을 해주세요.");
+		} 
+		
+		int paid = (int)Integer.parseInt(content);
+		
+		auctionBO.addPaid(itemId, userId, loginId, paid);
+		
+		result.put("code", 200);
+		result.put("result", "성공");
+		
+		return result;
+	}
 }
