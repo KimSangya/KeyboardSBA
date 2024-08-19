@@ -90,6 +90,7 @@ public class AuctionController {
 			Model model, HttpSession session) {
 		
 		Item item = auctionBO.getItemByItemId(itemId);
+		
 		List<Auction> paidList = auctionBO.getAuctionListByItemId(itemId);
 		
 		model.addAttribute("item", item);

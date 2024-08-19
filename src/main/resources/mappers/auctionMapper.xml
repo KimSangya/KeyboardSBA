@@ -14,6 +14,7 @@
  		`auction`
  	WHERE
  		`itemId` = #{itemId}
+ 	ORDER BY `paid` DESC
  	</select>
  	
  	<insert id="insertPaid" parameterType="map">
@@ -36,4 +37,14 @@
  			,NOW()
  		)
  	</insert>
+ 	
+ 	<select id="selectPaidByItemId" parameterType="int" resultType="int">
+ 	SELECT
+		MAX(`paid`)
+ 	FROM
+ 		`auction`
+ 	WHERE
+ 		`itemId` = #{itemId}
+ 	
+ 	</select>
  </mapper>

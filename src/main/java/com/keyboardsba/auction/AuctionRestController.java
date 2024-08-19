@@ -108,7 +108,23 @@ public class AuctionRestController {
 			result.put("error_message", "로그인을 해주세요.");
 		} 
 		
+		// 만약 가격이 낮을 경우
 		int paid = (int)Integer.parseInt(content);
+		int maxPrice = auctionBO.getItemPaidByItemId(itemId);
+		
+		int diff = paid - maxPrice;
+		
+		if(maxPrice > paid) {
+			result.put("code", 400);
+			result.put("error_message", "최대 입찰가보다 가격이 낮습니다.");
+			return result;
+		} 
+		
+		if(diff < 5000) {
+			result.put("code", 400);
+			result.put("error_message", "최대 가격보다 5000원 이상의 가격을 적어주세요.");
+			return result;
+		}
 		
 		auctionBO.addPaid(itemId, userId, loginId, paid);
 		

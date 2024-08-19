@@ -32,10 +32,13 @@
 			
 			let content = $(this).siblings(".comment-input").val().trim();
 			
+			// 만약 입력을 하지 않았을 경우
 			 if(!content) {
 				alert("댓글내용을 작성해야합니다.");
 				return;
 			 }
+			
+			// 만약 입찰가보다 가격이 낮을 경우
 			 $.ajax({
 				type:"post"
 				, url : "/auction/paid"
@@ -56,6 +59,10 @@
 						// 비로그인
 						alert(data.error_message);
 						location.href="/user/sign-in-view";
+					} else if(data.code == 400) {
+						// 입찰 금액이 낮을 때,
+						alert(data.error_message);
+						return;
 					} else {
 						alert(data.error_message);
 						}

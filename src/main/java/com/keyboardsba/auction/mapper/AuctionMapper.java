@@ -16,4 +16,6 @@ public interface AuctionMapper {
 			@Param("userId") int userId,
 			@Param("loginId") String loginId,
 			@Param("paid") int paid);
+	
+	public int selectPaidByItemId(int itemId);
 }

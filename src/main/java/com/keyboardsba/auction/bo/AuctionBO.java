@@ -37,6 +37,10 @@ public class AuctionBO {
 		return itemBO.getItemByItemId(itemId);
 	}
 	
+	public int getItemPaidByItemId(int itemId) {
+		return auctionMapper.selectPaidByItemId(itemId);
+	}
+	
 	public Item getItemByItemIdAndUserId(int itemId, int userId) {
 		return itemBO.getItemByItemIdAndUserId(itemId, userId);
 	}
