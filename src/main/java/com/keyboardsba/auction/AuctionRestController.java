@@ -110,7 +110,7 @@ public class AuctionRestController {
 		
 		// 만약 가격이 낮을 경우
 		int paid = (int)Integer.parseInt(content);
-		int maxPrice = auctionBO.getItemPaidByItemId(itemId);
+		int maxPrice = (int)auctionBO.getItemPaidByItemId(itemId);
 		
 		int diff = paid - maxPrice;
 		
