@@ -44,3 +44,34 @@ footer {
 	transform: translateY(0%);
 }
 
+.white {
+	background-color:white;
+}
+
+.item-grid {
+  			display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4개의 열을 명시적으로 설정 */
+            gap: 16px;
+   		}
+        .item-card {
+            cursor: pointer;
+            border: 1px solid #ddd;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        .item-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .item-card .details {
+            margin-top: 8px;
+        }
+        
+     @import url(https://fonts.googleapis.com/css?family=Lato:100,400);
+    #the-final-countdown {
+      text-align: center;
+    }
+

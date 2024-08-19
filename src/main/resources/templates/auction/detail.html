@@ -35,14 +35,19 @@
 						</div>
 						<div class="d-flex m-2">
 							<span class="mr-2 col-4">남은 시간:</span>
-							<span th:text="${#temporals.format(item.time, 'yyyy년 MM월 dd일  HH시 mm분')}"></span>
+							<span id="the-final-countdown">
+								<p></p>
+							</span>
 						</div>
+						
 					</div> <!-- 품목 명들 끝 -->
 				</div>
 				
 				<div>
 					<div class="mb-4">
 						<h3>설명글</h3>
+						<span th:text="${item.content}" class="white"></span>
+						<br>
 						<a href="#" class="btn btnRed paidBtn mr-3" th:data-paid-id="${item.id}">입찰</a>
 						<a href="#" class="btn btnRed chatBtn" th:data-chat-id="${item.id}">채팅</a>
 					</div>
@@ -74,7 +79,7 @@
 				        </div>
 				    </div>
 				</div>
-		</div>
+			</div>
 </section>
 
 <th:block layout:fragment="script">
@@ -149,5 +154,42 @@
 			});
 		});
 	});
+	
+	 setInterval(function time(){
+	      //시간 초기화
+	      var d = new Date();
+	      var hours = 24 - d.getHours();
+	      var min = 60 - d.getMinutes();
+	      var sec = 60 - d.getSeconds();
+	      //분이 있으면 시 반올림
+	      if(min =='00'){
+	          hours = 24 - d.getHours();
+	        }else{
+	          hours = 23 - d.getHours();
+	      }
+	      //초가 있으면 분 반올림        
+	      if(sec =='00'){
+	          min = 60 - d.getMinutes();
+	        }else{
+	          min = 59 - d.getMinutes();
+	      }
+	      //1자리수라면 0을 붙혀라
+	      if((hours + '').length == 1){
+	        hours = '0' + hours;
+	      }
+	      if((min + '').length == 1){
+	        min = '0' + min;
+	      }
+	      if((sec + '').length == 1){
+	        sec = '0' + sec;
+	      }
+	      //날짜를 표기하고 딜레이는 1초(1000)마다 바뀌겠금
+	      jQuery('#the-final-countdown p').html
+	          ('<span class="t_hour">'+hours+'</span>'+
+	           '<span class="t_colon">:</span>'+
+	           '<span class="t_min">'+min+'</span>'+
+	           '<span class="t_colon">:</span>'+
+	           '<span class="t_sec">'+sec+'</span>')
+	    }, 1000);
 	</script>
 </th:block>
