@@ -1,5 +1,6 @@
 package com.keyboardsba.item.mapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -18,7 +19,7 @@ public interface ItemMapper {
 			@Param("productPrice") int productPrice, 
 			@Param("productStatus") String productStatus, 
 			@Param("productValue") String productValue,
-			@Param("time") String time,
+			@Param("time") LocalDateTime time,
 			@Param("writeTextArea") String writeTextArea, 
 			@Param("imagePath") String imagePath);
 	

@@ -14,7 +14,7 @@
 			</div>
 			<div class="item-grid">
                 <div th:each="item : ${auctionList}">
-                	<div th:onclick="|location.href='@{/item/item-detail-view(itemId=${item.id})}'|" class="item-card">
+                	<div th:onclick="|location.href='@{/auction/auction-detail-view(itemId=${item.id})}'|" class="item-card">
                 		<div class="mt-3 mr-1"> 
 	                    <img th:src="${item.imageUrl}" class="img"> <br>
 							<div>

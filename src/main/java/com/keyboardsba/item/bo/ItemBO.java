@@ -1,5 +1,6 @@
 package com.keyboardsba.item.bo;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class ItemBO {
 	
 	
 	public void addItem(int userId, String loginId, String productName, int productPrice, 
-		String productStatus, String productValue, String writeTextArea, String time, MultipartFile file) {
+		String productStatus, String productValue, String writeTextArea, LocalDateTime time, MultipartFile file) {
 		
 		String imagePath = null;
 		if(file != null) {

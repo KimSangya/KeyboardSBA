@@ -4,192 +4,196 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/defaultLayout}">
 <section layout:fragment="content" class="contents d-flex justify-content-center">
-	<div class="detail-box d-flex justify-content-center">
-		<div>
-			<div class="d-flex justify-content-center">
-				<h1 class="m-4 font-weight-bold">세부 페이지</h1>
-			</div>
-				<div class="d-flex justify-content-center mb-5 page">
-					<div class="col-4"> <!-- 그림 -->
-						<div class="my-3" th:if="${item.imageUrl != null}">
-							<img th:src="${item.imageUrl}" alt="본문 이미지" class="img">
-						</div>
-					</div>
-					<div class="col-8"> <!-- 품목명들 경매 -->
-						<div class="d-flex m-2">
-							<span class="mr-2 col-4">경매 물품:</span>
-							<span th:text="${item.title}"></span>
-						</div>
-						<div class="d-flex m-2">
-							<span class="mr-2 col-4">시작 금액:</span>
-							<span th:text="${item.price}"></span>
-							<span>원</span>
-						</div>
-						<div class="d-flex m-2">
-							<span class="mr-2 col-4">상태 종류:</span>
-							  <span th:text="${item.status}"></span>
-						</div>
-						<div class="d-flex m-2">
-							<span class="mr-2 col-4">물품 종류:</span>
-							  <span th:text="${item.type}"></span>
-						</div>
-						<div class="d-flex m-2">
-							<span class="mr-2 col-4">남은 시간:</span>
-							<span id="the-final-countdown">
-								<p></p>
-							</span>
-						</div>
-						
-					</div> <!-- 품목 명들 끝 -->
-				</div>
-				
-				<div>
-					<div class="mb-4">
-						<h3>설명글</h3>
-						<span th:text="${item.content}" class="white"></span>
-						<br>
-						<a href="#" class="btn btnRed paidBtn mr-3" th:data-paid-id="${item.id}">입찰</a>
-						<a href="#" class="btn btnRed chatBtn" th:data-chat-id="${item.id}">채팅</a>
-					</div>
-					<div class="chooseChat m-2">
-						
-					</div>
-				</div>
-				<br>
-				<div class="d-flex justify-content-center m-3">
-						<a href="#" class="btn btnCheck callBtn" th:data-contact-id="${item.Id}" data-toggle="modal" data-target="#Modal">연락하기</a>
-						<a th:href="|/auction/auction-update-view?itemId=${item.id}|" th:if="${item.userId == session.userId}" id="updateBtn" class="btn btnCheck ml-5">수정하기</a>
-				</div>
-				</div>
-				<div class="modal fade" id="Modal">
-				    <div class="modal-dialog modal-dialog-centered">
-				        <div class="modal-content">
-				            <div class="modal-header">
-				                <h5 class="modal-title">연락하기</h5>
-				                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				                    <span aria-hidden="true">&times;</span>
-				                </button>
-				            </div>
-				            <div class="modal-body" id="modalContent">
-				                <!-- 모달 내용 -->
-				            </div>
-				            <div class="modal-footer">
-				                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-			</div>
+    <div class="detail-box d-flex justify-content-center">
+        <div>
+            <div class="d-flex justify-content-center">
+                <h1 class="m-4 font-weight-bold">세부 페이지</h1>
+            </div>
+            <div class="d-flex justify-content-center mb-5 page">
+                <div class="col-4"> <!-- 그림 -->
+                    <div class="my-3" th:if="${item.imageUrl != null}">
+                        <img th:src="${item.imageUrl}" alt="본문 이미지" class="img">
+                    </div>
+                </div>
+                <div class="col-8"> <!-- 품목명들 경매 -->
+                    <div class="d-flex m-2">
+                        <span class="mr-2 col-4">경매 물품:</span>
+                        <span th:text="${item.title}"></span>
+                    </div>
+                    <div class="d-flex m-2">
+                        <span class="mr-2 col-4">시작 금액:</span>
+                        <span th:text="${item.price}"></span>
+                        <span>원</span>
+                    </div>
+                    <div class="d-flex m-2">
+                        <span class="mr-2 col-4">상태 종류:</span>
+                        <span th:text="${item.status}"></span>
+                    </div>
+                    <div class="d-flex m-2">
+                        <span class="mr-2 col-4">물품 종류:</span>
+                        <span th:text="${item.type}"></span>
+                    </div>
+                    <div class="d-flex m-2">
+                        <div>
+                            <span class="mr-4 col-4">지정 시간 :</span>
+                            <span th:text="${#temporals.format(item.time, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                        </div>
+                    </div>
+                    <div class="d-flex m-2">
+                        <div>
+                            <span class="mr-4 col-4">남은 시간 :</span>
+                            <span id="the-final-countdown" th:data-end-time="${item.time}">
+                                <span></span>
+                            </span>
+                        </div>
+                    </div>
+                </div> <!-- 품목 명들 끝 -->
+            </div>
+
+            <div>
+                <div class="mb-4">
+                    <h3>설명글</h3>
+                    <span th:text="${item.content}" class="white"></span>
+                    <br>
+                    <a href="#" class="btn btnRed paidBtn mr-3" th:data-paid-id="${item.id}">입찰</a>
+                    <a href="#" class="btn btnRed chatBtn" th:data-chat-id="${item.id}">채팅</a>
+                </div>
+                <div class="chooseChat m-2"></div>
+            </div>
+            <br>
+            <div class="d-flex justify-content-center m-3">
+                <a href="#" class="btn btnCheck callBtn" th:data-contact-id="${item.id}" data-toggle="modal" data-target="#Modal">연락하기</a>
+                <a th:href="|/auction/auction-update-view?itemId=${item.id}|" th:if="${item.userId == session.userId}" id="updateBtn" class="btn btnCheck ml-5">수정하기</a>
+            </div>
+        </div>
+        <div class="modal fade" id="Modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">연락하기</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modalContent">
+                        <!-- 모달 내용 -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <th:block layout:fragment="script">
-	<script>
-	$(document).ready(function(){
-		$(".callBtn").on("click", function(e){
-			e.preventDefault();
-			let contactId = $(this).data("contact-id");
-			$("#Modal").data('contact-id', contactId);
-			// console.log(contactId); //확인 완료
-			
-			$.ajax({
-				type : "post"
-				, url : "/item/contact"
-				, data : {"contactId" : contactId}
-				, success:function(data) {
-					if(data.code == 200) {
-						$('#modalContent').empty();
-						$('#modalContent').append(data.result);
-						$('#Modal').modal('show');
-					} else {
-						alert("문제가 발생했습니다.");
-					}
-				}
-				, error:function(e) {
-					alert("열기에 실패하셨습니다.");
-				}
-			});
-		});
-		
-		$(".chatBtn").on("click", function(e) {
-			e.preventDefault();
-			let chatId = $(this).data('chat-id');
-			//alert("채팅 알림 눌림");
-			
-			$(".chatBtn").removeClass("btnRed");
-			$(".chatBtn").addClass("btnCheck");
-			$(".paidBtn").removeClass("btnCheck");
-			$(".paidBtn").addClass("btnRed");
-			
-			$.ajax({
-				url : "/auction/chat"
-				, data : {"chatId" : chatId}
-				, success:function(data) {
-					$(".chooseChat").html(data);
-				}
-				, error:function() {
-					alert("문제가 발생하였습니다.");
-				} 
-			});
-		});
-		
-		$(".paidBtn").on("click", function(e) {
-			e.preventDefault();
-			let paidId = $(this).data('paid-id');
-			
-			// alert("배팅 알림 눌림");
-			$(".paidBtn").removeClass("btnRed");
-			$(".paidBtn").addClass("btnCheck");
-			$(".chatBtn").removeClass("btnCheck");
-			$(".chatBtn").addClass("btnRed");
-			
-			$.ajax({
-				url : "/auction/paid"
-				, data : {"paidId" : paidId}
-				, success:function(data) {
-					$(".chooseChat").html(data);
-				}
-				, error:function() {
-					alert("문제가 발생하였습니다.");
-				}
-			});
-		});
-	});
-	
-	 setInterval(function time(){
-	      //시간 초기화
-	      var d = new Date();
-	      var hours = 24 - d.getHours();
-	      var min = 60 - d.getMinutes();
-	      var sec = 60 - d.getSeconds();
-	      //분이 있으면 시 반올림
-	      if(min =='00'){
-	          hours = 24 - d.getHours();
-	        }else{
-	          hours = 23 - d.getHours();
-	      }
-	      //초가 있으면 분 반올림        
-	      if(sec =='00'){
-	          min = 60 - d.getMinutes();
-	        }else{
-	          min = 59 - d.getMinutes();
-	      }
-	      //1자리수라면 0을 붙혀라
-	      if((hours + '').length == 1){
-	        hours = '0' + hours;
-	      }
-	      if((min + '').length == 1){
-	        min = '0' + min;
-	      }
-	      if((sec + '').length == 1){
-	        sec = '0' + sec;
-	      }
-	      //날짜를 표기하고 딜레이는 1초(1000)마다 바뀌겠금
-	      jQuery('#the-final-countdown p').html
-	          ('<span class="t_hour">'+hours+'</span>'+
-	           '<span class="t_colon">:</span>'+
-	           '<span class="t_min">'+min+'</span>'+
-	           '<span class="t_colon">:</span>'+
-	           '<span class="t_sec">'+sec+'</span>')
-	    }, 1000);
-	</script>
+    <script>
+    $(document).ready(function() {
+        function updateCountdown() {
+            let endTimeStr = $('#the-final-countdown').data('end-time'); // 이친구 값을 가져오질 못해서 지금 에러가 나고있는 상황
+            let endTime = new Date(endTimeStr);
+            let now = new Date();
+            
+            let timeDiff = endTime - now;
+
+            if (isNaN(timeDiff) || timeDiff <= 0) {
+                $('#the-final-countdown').html('<span>00:00:00</span>');
+                return;
+            }
+            
+            let days = Math.floor(timeDiff / (60 * 60 * 24 * 1000));
+            let hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+            days = days < 10 ? days : days;
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            $('#the-final-countdown').html(
+            	`<span>${days}</span>` +
+                `<span>일 </span>` +
+                `<span>${hours}</span>` +
+                `<span>:</span>` +
+                `<span>${minutes}</span>` +
+                `<span>:</span>` +
+                `<span>${seconds}</span>`
+            );
+        }
+
+        // 1초마다 카운트다운 업데이트
+        setInterval(updateCountdown, 1000);
+
+        // 페이지 로드 시 카운트다운 초기화
+        updateCountdown();
+
+        $(".callBtn").on("click", function(e) {
+            e.preventDefault();
+            let contactId = $(this).data("contact-id");
+            $("#Modal").data('contact-id', contactId);
+            
+            $.ajax({
+                type: "post",
+                url: "/item/contact",
+                data: {"contactId": contactId},
+                success: function(data) {
+                    if (data.code == 200) {
+                        $('#modalContent').empty();
+                        $('#modalContent').append(data.result);
+                        $('#Modal').modal('show');
+                    } else {
+                        alert("문제가 발생했습니다.");
+                    }
+                },
+                error: function(e) {
+                    alert("열기에 실패하셨습니다.");
+                }
+            });
+        });
+        
+        $(".chatBtn").on("click", function(e) {
+            e.preventDefault();
+            let chatId = $(this).data('chat-id');
+            
+            $(".chatBtn").removeClass("btnRed");
+            $(".chatBtn").addClass("btnCheck");
+            $(".paidBtn").removeClass("btnCheck");
+            $(".paidBtn").addClass("btnRed");
+            
+            $.ajax({
+                url: "/auction/chat",
+                data: {"chatId": chatId},
+                success: function(data) {
+                    $(".chooseChat").html(data);
+                },
+                error: function() {
+                    alert("문제가 발생하였습니다.");
+                }
+            });
+        });
+        
+        $(".paidBtn").on("click", function(e) {
+            e.preventDefault();
+            let paidId = $(this).data('paid-id');
+            
+            $(".paidBtn").removeClass("btnRed");
+            $(".paidBtn").addClass("btnCheck");
+            $(".chatBtn").removeClass("btnCheck");
+            $(".chatBtn").addClass("btnRed");
+            
+            $.ajax({
+                url: "/auction/paid",
+                data: {"paidId": paidId},
+                success: function(data) {
+                    $(".chooseChat").html(data);
+                },
+                error: function() {
+                    alert("문제가 발생하였습니다.");
+                }
+            });
+        });
+    });
+    </script>
 </th:block>

@@ -1,5 +1,6 @@
 package com.keyboardsba.auction.bo;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,7 @@ public class AuctionBO {
 	}
 	
 	public void addItem(int userId, String loginId, String productName, int productPrice, String productStatus, String productValue,
-			String writeTextArea, String time, MultipartFile file) {
+			String writeTextArea, LocalDateTime time, MultipartFile file) {
 		itemBO.addItem(userId, loginId, productName, productPrice, productStatus, productValue, writeTextArea, time, file);
 	}
 	

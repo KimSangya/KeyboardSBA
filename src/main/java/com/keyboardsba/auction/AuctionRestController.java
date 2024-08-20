@@ -1,12 +1,11 @@
 package com.keyboardsba.auction;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.keyboardsba.auction.bo.AuctionBO;
-import com.keyboardsba.chat.domain.Chat;
-import com.keyboardsba.item.domain.Item;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -66,7 +63,7 @@ public class AuctionRestController {
 			@RequestParam("productStatus") String productStatus,
 			@RequestParam("productValue") String productValue,
 			@RequestParam("writeTextArea") String writeTextArea,
-			@RequestParam("time") String time,
+			@RequestParam("time") @DateTimeFormat(pattern = "yy-MM-dd HH:mm") LocalDateTime time,
 			@RequestParam("file") MultipartFile file,
 			HttpSession session) {
 		
