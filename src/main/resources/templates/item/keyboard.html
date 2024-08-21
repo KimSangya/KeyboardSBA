@@ -14,7 +14,9 @@
             </div>
             <div class="item-grid">
                 <div th:each="item : ${itemKeyBoardList}" th:onclick="|location.href='@{/item/item-detail-view(itemId=${item.id})}'|" class="item-card">
-                    <img th:src="${item.imageUrl}" alt="Item image">
+                    <div class="container img">
+                    	<img th:src="${item.imageUrl}" class="image" alt="Item image">
+                    </div>
                     <div class="details">
                         <span th:text="${item.title}" class="font-weight-bold">제목</span> <br>
                         <span data-th-text="${#numbers.formatInteger(item.price, 3, 'COMMA') + '원'}">가격</span> <br>

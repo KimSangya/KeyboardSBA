@@ -53,7 +53,7 @@ public class AuctionBO {
 	}
 	
 	public void updateItem(int itemId, int userId, String loginId, String productName, int productPrice, 
-			String productStatus, String productValue, String writeTextArea, String time,  MultipartFile file) {	
+			String productStatus, String productValue, String writeTextArea, LocalDateTime time,  MultipartFile file) {	
 		itemBO.updateItem(itemId, userId, loginId, productName, productPrice, productStatus, productValue, writeTextArea, time, file);
 	}
 	

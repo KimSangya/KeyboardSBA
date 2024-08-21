@@ -99,6 +99,8 @@
 
             if (isNaN(timeDiff) || timeDiff <= 0) {
                 $('#the-final-countdown').html('<span>00:00:00</span>');
+              	alert("경매가 종료된 물품입니다.");
+              	location.href="/auction/auction-list-view";
                 return;
             }
             
@@ -197,3 +199,4 @@
     });
     </script>
 </th:block>
+</html>

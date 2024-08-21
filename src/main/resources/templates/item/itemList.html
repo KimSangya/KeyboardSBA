@@ -12,7 +12,7 @@
 					<a href="/item/item-create-view" class="modern btn btnCheck">등록하기</a>
 				</div>
 			</div>
-			<div class="item-grid">
+			<div class="item-grid mt-3">
                 <div th:each="item : ${auctionList}">
                 	<div th:onclick="|location.href='@{/auction/auction-detail-view(itemId=${item.id})}'|" class="item-card">
                 		<div class="mt-3 mr-1"> 
@@ -26,16 +26,19 @@
                 	</div>
                 </div>
             </div>
+                 <div class="d-flex justify-content-end mt-2">
+                	<a href="/auction/auction-list-view" class="text-primary">경매 바로가기</a>
+            	</div>
 		</div> <!-- 경매 컨테이너 끝 -->
 		
 		<hr>
 		
-		<div class="mt-4"> <!-- 경매 컨테이너 설정 -->
+		<div class="mt-5"> <!-- 경매 컨테이너 설정 -->
 			<span class="display-4">키보드</span>
-			<div class="item-grid">
+			<div class="item-grid mt-3">
                 <div th:each="item : ${itemKeyBoardList}" th:onclick="|location.href='@{/item/item-detail-view(itemId=${item.id})}'|" class="item-card">
                     <div class="img container">
-                    	<img th:src="${item.imageUrl}" alt="Item image">
+                    	<img th:src="${item.imageUrl}" alt ="Item image">
                     </div>
                     <div class="details">
                         <span th:text="${item.title}" class="font-weight-bold">제목</span> <br>
@@ -45,11 +48,14 @@
                     </div>
                 </div>
             </div>
+             <div class="d-flex justify-content-end mt-2">
+                	<a href="/item/item-keyboard-view" class="text-primary">키보드 바로가기</a>
+            </div>	
 		</div> <!-- 경매 컨테이너 끝 -->
-		
+		<hr>
 		<div class="mt-5"> <!-- 경매 컨테이너 설정 -->
 			<span class="display-4">키캡</span>
-			<div class="d-flex">
+			<div class="d-flex mt-3">
 				<div class="item-grid">
                 <div th:each="item : ${itemKeyCapList}" th:onclick="|location.href='@{/item/item-detail-view(itemId=${item.id})}'|" class="item-card">
                     <img th:src="${item.imageUrl}" alt="Item image">
@@ -63,6 +69,10 @@
             </div>
 			</div>
 		</div>
+		 <div class="d-flex justify-content-end mt-2">
+             <a href="/item/item-keycap-view" class="text-primary">키캡 바로가기</a>
+         </div>
+  		<hr>
 	</div>
 </section>
 </html>

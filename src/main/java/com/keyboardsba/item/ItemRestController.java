@@ -1,5 +1,6 @@
 package com.keyboardsba.item;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +86,7 @@ public class ItemRestController {
 			@RequestParam("productStatus") String productStatus,
 			@RequestParam("productValue") String productValue,
 			@RequestParam("writeTextArea") String writeTextArea,
-			@RequestParam(value = "time", required = false) String time,
+			@RequestParam(value = "time", required = false) LocalDateTime time,
 			@RequestParam("file") MultipartFile file,
 			HttpSession session) {
 		

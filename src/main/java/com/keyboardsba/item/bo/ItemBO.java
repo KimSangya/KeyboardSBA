@@ -42,7 +42,7 @@ public class ItemBO {
 	}
 	
 	public void updateItem(int itemId, int userId, String loginId, String productName, int productPrice, 
-			String productStatus, String productValue, String writeTextArea, String time, MultipartFile file) {
+			String productStatus, String productValue, String writeTextArea, LocalDateTime time, MultipartFile file) {
 			
 			Item item = itemMapper.selectItemByItemIdAndUserId(itemId, userId);
 			

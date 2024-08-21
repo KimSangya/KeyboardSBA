@@ -7,7 +7,7 @@
     <div class="container"> <!-- 전체 div 컨테이너 설정 -->
         <div class="mt-5"> <!-- 경매 컨테이너 설정 -->
             <div class="d-flex justify-content-between mb-2">
-                <span class="display-4">교환</span>
+                <span class="display-4">경매</span>
                 <div class="mt-4">
                     <a href="/auction/auction-create-view" class="modern btn btnCheck">등록하기</a>
                 </div>
@@ -21,6 +21,10 @@
 								<span th:text="${item.title}" class="font-weight-bold">제목</span> <br>
 								<span>판매자 : </span>
 								<span th:text="${item.loginId}">글쓴이</span>
+								<div>
+									<span>남은 시간 : </span>
+									<span id="time" th:data-item-end="${item.time}">종료됨</span>
+								</div>
 							</div>
 	                    </div>
                 	</div>
@@ -29,5 +33,53 @@
         </div>
     </div>
 </section>
-</body>
+<th:block layout:fragment="script">
+	<script>
+		$(document).ready(function() {
+			// 남은 시간 생각중
+			function updateCountdown() {
+	            let endTimeStr = $('#time').data('item-end');
+	            console.log(endTimeStr);
+ 	            let endTime = new Date(endTimeStr);
+	            let now = new Date();
+	            
+	            let timeDiff = endTime - now;
+
+	            if (isNaN(timeDiff) || timeDiff <= 0) {
+	                $('#the-final-countdown').html('<span>00:00:00</span>');
+	                return;
+	            }
+	            
+	            let days = Math.floor(timeDiff / (60 * 60 * 24 * 1000));
+	            let hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+	            let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+	            let seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+	            days = days < 10 ? days : days;
+	            hours = hours < 10 ? '0' + hours : hours;
+	            minutes = minutes < 10 ? '0' + minutes : minutes;
+	            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+	            $('#the-final-countdown').html( 
+	            	`<span>${days}</span>` +
+	                `<span>일 </span>` +
+	                `<span>${hours}</span>` +
+	                `<span>:</span>` +
+	                `<span>${minutes}</span>` +
+	                `<span>:</span>` +
+	                `<span>${seconds}</span>`
+	            );
+	        }
+
+	        // 1초마다 카운트다운 업데이트
+	        setInterval(updateCountdown, 1000);
+
+	        // 페이지 로드 시 카운트다운 초기화
+	        updateCountdown();
+			
+			let time = $(".time").data("item-end");
+			console.log(time);	
+		});
+	</script>
+</th:block>
 </html>
