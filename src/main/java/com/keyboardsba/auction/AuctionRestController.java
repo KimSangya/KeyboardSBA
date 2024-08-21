@@ -31,7 +31,7 @@ public class AuctionRestController {
 			@RequestParam("productStatus") String productStatus,
 			@RequestParam("productValue") String productValue,
 			@RequestParam("writeTextArea") String writeTextArea,
-			@RequestParam("time") String time,
+			@RequestParam("time") @DateTimeFormat(pattern = "yy-MM-dd HH:mm") LocalDateTime time,
 			@RequestParam("file") MultipartFile file,
 			HttpSession session) {
 		
