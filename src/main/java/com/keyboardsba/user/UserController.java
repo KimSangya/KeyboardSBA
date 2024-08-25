@@ -1,8 +1,18 @@
 package com.keyboardsba.user;
 
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.keyboardsba.user.bo.KakaoBO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -10,15 +20,33 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class UserController {
 	
+	@Autowired
+	private KakaoBO kakaoBO;
+	
+	@Value("${spring.security.oauth2.client.registration.kakao.client-id}")
+	private String client_id;
+
+	@Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
+	private String redirect_uri;
+	
 	@GetMapping("/sign-up-view")
 	public String signUp() {
+		
 		return "user/signUp";
 	}
 	
 	@GetMapping("/sign-in-view")
-	public String signIn() {
+	public String signIn(Model model) {
+		String location = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="+client_id+"&redirect_uri="+redirect_uri;
+        model.addAttribute("location", location);
 		return "user/signIn";
 	}
+	
+	@GetMapping("/callback")
+    public ResponseEntity<?> callback(@RequestParam("code") String code) {
+        String accessToken = kakaoBO.getAccessTokenFromKakao(code);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 	
 	@RequestMapping("/sign-out")
 	public String signOut(HttpSession session) {
