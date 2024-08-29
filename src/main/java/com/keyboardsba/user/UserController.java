@@ -42,12 +42,6 @@ public class UserController {
 		return "user/signIn";
 	}
 	
-	@GetMapping("/callback")
-    public ResponseEntity<?> callback(@RequestParam("code") String code) {
-        String accessToken = kakaoBO.getAccessTokenFromKakao(code);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-	
 	@RequestMapping("/sign-out")
 	public String signOut(HttpSession session) {
 		// session 내용 비움

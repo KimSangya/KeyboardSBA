@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+      
+<section layout:fragment="content" class="contents justify-content-center">
+	    <h1>Kakao Callback</h1> <br>
+    	<p>Authorization code: <span th:text="${code}"></span></p>
+    	<p>email code: <span th:text="${email}"></span></p>
+    	<p>name code: <span th:text="${nickname}"></span></p>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+
+    </script>
+</th:block>
