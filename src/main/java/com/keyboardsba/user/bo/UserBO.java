@@ -44,4 +44,16 @@ public class UserBO {
 		
 		return userInfo;
 	}
+	
+	public Map<String, Object> userIsExist(String email, String nickname, String hashedpassword) {
+		UserEntity user = userRepository.findByEmailAndNameAndPassword(email, nickname, hashedpassword);
+		
+		Map<String, Object> userInfo = new HashMap<>();
+		userInfo.put("name", user.getName());
+		userInfo.put("loginId", user.getLoginId());
+		userInfo.put("phoneNumber", user.getPhoneNumber());
+		userInfo.put("email", user.getEmail());
+		
+		return userInfo;
+	}
 }

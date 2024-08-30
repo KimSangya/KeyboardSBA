@@ -37,24 +37,23 @@ public class KakaoController {
         KakaoTokenResponse tokenResponse = kakaoBO.getAccessToken(code);
         String accesstoken = tokenResponse.getAccess_token();
         KakaoUser kakaoUser = kakaoBO.getKakaoUser(accesstoken);
-
-        // TODO 만약 그 이메일과 닉네임, 코드 값이 넘어왔을때 일치하면 바로 로그인이 될수있게 처리.
         
         // 이메일과 닉네임 가져오기
         String email = kakaoUser.getKakao_account().getEmail();
         String nickname = kakaoUser.getKakao_account().getProfile().getNickname();
         String hashedpassword = EncryptUtils.SHA256(nickname+email);
         
-        
-        User user = new User();
-        user.setEmail(email);
-        user.setNickname(nickname);
-             
-        model.addAttribute("email", email);
-        model.addAttribute("nickname", nickname);
-        model.addAttribute("accesstoken", hashedpassword);
-             
-        return "kakao/callback";
-    }
+        // TODO 만약 그 이메일과 닉네임, 코드 값이 넘어왔을때 일치하면 바로 로그인이 될수있게 처리.
 
+        	User user = new User();
+            user.setEmail(email);
+            user.setNickname(nickname);
+                 
+            model.addAttribute("email", email);
+            model.addAttribute("nickname", nickname);
+            model.addAttribute("accesstoken", hashedpassword);
+                 
+            return "kakao/callback";
+     
+    }
 }
