@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.keyboardsba.common.EncryptUtils;
 import com.keyboardsba.user.bo.UserBO;
 import com.keyboardsba.user.entity.UserEntity;
 
@@ -47,7 +48,8 @@ public class UserRestController {
 			@RequestParam("password") String password, @RequestParam("name") String name,
 			@RequestParam("email") String email, @RequestParam("phoneNumber") String phoneNumber) {
 		
-		UserEntity user = userBO.addUser(loginId, password, name, email, phoneNumber);
+		String hashedPassword = EncryptUtils.SHA256(password);
+		UserEntity user = userBO.addUser(loginId, hashedPassword, name, email, phoneNumber);
 		Map<String, Object> result = new HashMap<>();
 		
 		if (user != null) {

@@ -3,16 +3,140 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/defaultLayout}">
-      
-<section layout:fragment="content" class="contents justify-content-center">
-	    <h1>Kakao Callback</h1> <br>
-    	<p>Authorization code: <span th:text="${code}"></span></p>
-    	<p>email code: <span th:text="${email}"></span></p>
-    	<p>name code: <span th:text="${nickname}"></span></p>
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+    <div class="sign-up-box d-flex justify-content-center">
+        <div>
+            <div class="d-flex justify-content-center">
+                <h1 class="m-4 font-weight-bold">회원가입</h1>
+            </div>
+            <form id="signUpForm" method="post" action="/user/sign-up">
+                <div>
+                    <div class="mb-5">
+                        <span>회원가입하기 위한 절차가 더 필요합니다.</span>
+                    </div>
+                    <span class="sign-up-subject">아이디(닉네임)</span>
+                    <div class="d-flex ml-3 mt-3">
+                        <input type="text" id="loginId" name="loginId" class="form-control col-7" placeholder="ID를 입력해주세요">
+                        <button type="button" id="loginIdCheckBtn" class="btnRed btn ml-3">중복확인</button>
+                    </div>
+                    <div class="ml-3 mb-3">
+                        <div id="idCheckLength" class="small text-danger d-none">ID를 4자 이상 입력해주세요.</div>
+                        <div id="idCheckDuplicated" class="small text-danger d-none">이미 사용중인 ID입니다.</div>
+                        <div id="idCheckOk" class="small text-success d-none">사용 가능한 ID 입니다.</div>
+                    </div>
+                    
+                    <span class="sign-up-subject">비밀번호</span>
+                    <div class="m-3">
+                        <input type="password" id="password" name="password" class="form-control col-7" th:value="${accesstoken}">
+                    </div>
+    
+                    <span class="sign-up-subject">이메일</span>
+                    <div class="m-3">
+                        <input type="email" th:value="${email}" id="email" name="email" class="form-control col-7">
+                    </div>
+    
+                    <span class="sign-up-subject">이름</span>
+                    <div class="m-3">
+                        <input type="text" th:value="${nickname}" id="name" name="name" class="form-control col-7">
+                    </div>
+                    
+                    <span class="sign-up-subject">전화번호</span>
+                    <div class="m-3">
+                        <input type="text" id="phoneNumber" name="phoneNumber" class="form-control col-7" placeholder="전화번호를 입력하세요">
+                    </div>
+                </div>
+                <br>
+                <div class="d-flex justify-content-center m-3">
+                    <button type="submit" id="signUpBtn" class="btn btnCheck">가입하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </section>
 
 <th:block layout:fragment="script">
     <script>
-
+        $(document).ready(function() {
+            $("#loginIdCheckBtn").on("click", function() {
+                $("#idCheckLength").addClass("d-none");
+                $("#idCheckDuplicated").addClass("d-none");
+                $("#idCheckOk").addClass("d-none");
+                
+                let loginId = $("#loginId").val().trim();
+                
+                if (loginId.length < 4) {
+                    $("#idCheckLength").removeClass("d-none");
+                    return;
+                }
+                
+                $.ajax({
+                    url: "/user/is-duplicated-id",
+                    data: { "loginId": loginId },
+                    success: function(data) {
+                        if (data.is_duplicated_id) {
+                            $("#idCheckDuplicated").removeClass("d-none");
+                        } else {
+                            $("#idCheckOk").removeClass("d-none");
+                        }
+                    },
+                    error: function(error) {
+                        alert("중복확인에 실패하였습니다.");
+                    }
+                });
+            });
+            
+            $("#signUpForm").on('submit', function(e) {
+                e.preventDefault();
+                
+                let loginId = $("#loginId").val().trim();
+                let password = $("#password").val().trim();
+                let email = $("#email").val().trim();
+                let name = $("#name").val().trim();
+                let phoneNumber = $("#phoneNumber").val().trim();
+                
+                if (!loginId) {
+                    alert("아이디를 입력해주세요.");
+                    return false;
+                }
+                
+                if (!password) {
+                    alert("비밀번호를 입력해주세요.");
+                    return false;
+                }
+                
+                if (!email) {
+                    alert("이메일을 입력해주세요.");
+                    return false;
+                }
+                
+                if (!name) {
+                    alert("이름을 입력해주세요.");
+                    return false;
+                }
+                
+                if (!phoneNumber) {
+                    alert("전화번호를 입력해주세요.");
+                    return false;
+                }
+                
+                if ($("#idCheckOk").hasClass("d-none")) {
+                    alert("아이디 중복 확인을 해주세요");
+                    return false;
+                }
+                
+                let url = $(this).attr("action");
+                let params = $(this).serialize();
+                
+                $.post(url, params)
+                .done(function(data) {
+                    if (data.code === 200) {
+                        alert("가입을 환영합니다. 로그인을 해주세요");
+                        location.href = "/user/sign-in-view";
+                    } else {
+                        alert(data.error_message);
+                    }
+                });
+            });
+        });
     </script>
 </th:block>
