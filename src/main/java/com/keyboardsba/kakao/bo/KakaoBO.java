@@ -14,7 +14,7 @@ import com.keyboardsba.kakao.entity.KakaoTokenResponse;
 import com.keyboardsba.kakao.entity.KakaoUser;
 
 @Service
-public class KakaoService {
+public class KakaoBO {
 
     private static final String tokenUri = "https://kauth.kakao.com/oauth/token";
     private static final String userInfoUri = "https://kapi.kakao.com/v2/user/me";

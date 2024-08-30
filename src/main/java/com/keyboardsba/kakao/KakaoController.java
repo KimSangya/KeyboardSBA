@@ -1,6 +1,6 @@
 package com.keyboardsba.kakao;
 
-import com.keyboardsba.kakao.bo.KakaoService;
+import com.keyboardsba.kakao.bo.KakaoBO;
 import com.keyboardsba.kakao.entity.KakaoTokenResponse;
 import com.keyboardsba.kakao.entity.KakaoUser;
 import com.keyboardsba.kakao.entity.User;
@@ -22,7 +22,7 @@ public class KakaoController {
     private static final String redirect_uri = "http://localhost/kakao/callback";
 
     @Autowired
-    private KakaoService kakaoService;
+    private KakaoBO kakaoBO;
 
     @GetMapping("/login")
     public RedirectView kakaologin() {
@@ -32,8 +32,8 @@ public class KakaoController {
 
     @GetMapping("/callback")
     public String kakaoCallback(@RequestParam("code") String code, Model model) {
-        KakaoTokenResponse tokenResponse = kakaoService.getAccessToken(code);
-        KakaoUser kakaoUser = kakaoService.getKakaoUser(tokenResponse.getAccess_token());
+        KakaoTokenResponse tokenResponse = kakaoBO.getAccessToken(code);
+        KakaoUser kakaoUser = kakaoBO.getKakaoUser(tokenResponse.getAccess_token());
 
         // 이메일과 닉네임 가져오기
         String email = kakaoUser.getKakao_account().getEmail();
