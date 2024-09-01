@@ -3,10 +3,111 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.keyboardsba.post.mapper.PostMapper">
+
 	<select id="selectPostListTest" resultType="map">
 		SELECT
 			*
 		FROM
 			`post`
 	</select>
+	
+	<select id="selectPostListByUserId" parameterType="map" resultType="com.keyboardsba.post.domain.Post">
+		SELECT
+			`id`
+			,`userId`
+			,`subject`
+			,`content`
+			,`imageUrl`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+			<if test="direction == 'next'">
+			<![CDATA[
+			AND `id` < #{standardId}
+			]]>
+			ORDER BY `id` DESC
+			</if>
+			<if test="direction == 'prev'">
+			<![CDATA[
+			AND `id` > #{standardId}
+			]]>
+			</if>
+			<if test="direction == null">
+			ORDER BY `id` DESC
+			</if>
+		LIMIT ${limit} <!-- limit은 작은 다움표가 붙이면 작동이 되지 않는다. #{limit} : 이대로 사용하면 에러가 난다. / 지금은 고쳐짐-->
+			<!-- 원래는 #{} : 라고 적었던 친구들은 ``를 자동적으로 붙여주는 친구임. 원래는 ${}이런식으로 설정을 해야한다. -->
+	</select>
+	
+	<select id="selectPostIdByUserIdAsSort" parameterType="map" resultType="int">
+		SELECT
+			`id`
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+		ORDER BY `id` ${sort}
+		LIMIT 1
+	</select>
+	
+	<insert id="insertPost" parameterType="map">
+		INSERT INTO `post`
+		(
+			`userId`
+			,`subject`
+			,`content`
+			,`imageUrl`
+			,`createdAt`
+			,`updatedAt`
+		)
+		VALUES
+		(
+			#{userId}
+			, #{subject}
+			, #{content}
+			, #{imagePath}
+			, NOW()
+			, NOW()
+		)
+	</insert>
+	
+	<select id="selectPostByPostIdUserId" parameterType="map" resultType="com.keyboardsba.post.domain.Post">
+		SELECT
+			`id`
+			,`userId`
+			,`subject`
+			,`content`
+			,`imageUrl`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+		AND
+			`id` = #{postId}	
+	</select>
+	
+	<update id="updatePostByPostId" parameterType="map">
+		UPDATE `post`
+		SET
+			`subject` = #{subject}
+			, `content` = #{content}
+			<if test="imagePath != null"> <!-- 업로드가 실패했거나 업로드가 안됐거나.. -->
+			, `imageUrl` = #{imagePath}
+			</if>
+			, `updatedAt` = NOW()
+		WHERE
+			`id` = ${postId}	
+	</update>
+	
+	<delete id="deletePostByPostId" parameterType="int">
+		DELETE FROM
+			  `post`
+		WHERE
+			`id` = #{postId}
+	</delete>
 </mapper>
