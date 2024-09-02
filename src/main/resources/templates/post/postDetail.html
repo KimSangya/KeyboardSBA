@@ -15,8 +15,8 @@
 		<textarea rows="10" id="content" class="form-control" placeholder="내용을 입력하세요" th:text="${post.content}"></textarea>
 		
 		<!-- 이미지가 있을 때에만 영역 표시, 노출 if문을 사용해서 넣어버린다 -->
-		<div class="my-3" th:if="${post.imagePath != null}">
-			<img th:src="${post.imagePath}" alt="본문 이미지" width="300">
+		<div class="my-3" th:if="${post.imageUrl != null}">
+			<img th:src="${post.imageUrl}" alt="본문 이미지" width="300">
 		</div>
 		
 		

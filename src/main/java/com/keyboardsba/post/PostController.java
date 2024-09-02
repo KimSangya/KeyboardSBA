@@ -28,15 +28,9 @@ public class PostController {
 			HttpSession session, Model model) {
 		// 로그인 여부 확인
 		// int로 하는 순간 error가 날것이다. 왜냐면 int는 null값을 못받기 때문에.
-		Integer userId = (Integer)session.getAttribute("userId");
-		
-		if(userId == null) {
-			// 비로그인일때 로그인 페이지로 이동
-			return "redirect:/user/sign-in-view";
-		}
 		
 		// DB 조회 (글목록에 대해서)
-		List<Post> postList = postBO.getPostListByUserId(userId, prevIdParam, nextIdParam);
+		List<Post> postList = postBO.getPostList(prevIdParam, nextIdParam);
 		int prevId = 0;
 		int nextId = 0; // 비교를 할 때는 isempty, issize() < 0
 		if(postList.isEmpty() == false) { // 글 목록이 비어있지 않을 때 페이징 정보 세팅
@@ -45,13 +39,13 @@ public class PostController {
 			
 			// 이전 방향의 끝인가? 그러면 0으로 세팅
 			// prevId와 테이블의 제일 큰 숫자와 같으면 이전의 끝페이지
-			if(postBO.isPrevLastPageByUserId(userId, prevId)) {
+			if(postBO.isPrevLastPage(prevId)) {
 				prevId = 0;
 			}
 			
 			// 다음 방향의 끝인가? 그러면 0으로 세팅
 			// nextId와 테이블의 제일 작은 숫자가 같으면 다음의 끝 페이지라고 볼 수 있다.
-			if(postBO.isNextLastPageByUserId(userId, nextId)) {
+			if(postBO.isNextLastPage(nextId)) {
 				nextId = 0;
 			}
 		}
@@ -88,7 +82,7 @@ public class PostController {
 		// 쿼리문부터 생각해라. 어떤걸 가져오는지에 대해서 생각을 해야함. 글 번호와 아이디 번호까지 가져오는것
 		// db 조회 = userId, postId
 		int userId = (int)session.getAttribute("userId"); // 한번더 검사를 하는 과정, 만약 session으로 에러가 났다면 로그인이 풀렸다는 것이다.
-		Post post = postBO.getPostByPostIdUserId(userId, postId);
+		Post post = postBO.getPostByPostId(postId);
 		
 		// 화면이 어디로 갈건지 model에 담기
 		model.addAttribute("post", post);

@@ -13,16 +13,13 @@ public interface PostMapper {
 	
 	public List<Map<String, Object>> selectPostListTest();
 	
-	public List<Post> selectPostListByUserId(
-		@Param("userId")int userId,
+	public List<Post> selectPostList(
 		@Param("standardId") Integer standardId, 
 		@Param("direction") String direction, 
 		@Param("limit") int limit);
 	
 	// 여기서 리턴 타입은 postId(int)
-	public int selectPostIdByUserIdAsSort(
-			@Param("userId") int userId,
-			@Param("sort") String sort);
+	public int selectPostIdAsSort(String sort);
 	
 	public void insertPost(
 			@Param("userId") int userId,
@@ -30,8 +27,7 @@ public interface PostMapper {
 			@Param("content") String content,
 			@Param("imagePath") String imagePath);
 	
-	public Post selectPostByPostIdUserId(
-			@Param("userId") int userId, 
+	public Post selectPostByPostId( 
 			@Param("postId") int postId);
 	
 	public void updatePostByPostId(

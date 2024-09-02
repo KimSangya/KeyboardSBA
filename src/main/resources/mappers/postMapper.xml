@@ -11,7 +11,7 @@
 			`post`
 	</select>
 	
-	<select id="selectPostListByUserId" parameterType="map" resultType="com.keyboardsba.post.domain.Post">
+	<select id="selectPostList" parameterType="map" resultType="com.keyboardsba.post.domain.Post">
 		SELECT
 			`id`
 			,`userId`
@@ -22,17 +22,17 @@
 			,`updatedAt`
 		FROM
 			`post`
-		WHERE
-			`userId` = #{userId}
 			<if test="direction == 'next'">
 			<![CDATA[
-			AND `id` < #{standardId}
+			WHERE
+			`id` < #{standardId}
 			]]>
 			ORDER BY `id` DESC
 			</if>
 			<if test="direction == 'prev'">
 			<![CDATA[
-			AND `id` > #{standardId}
+			WHERE
+			`id` > #{standardId}
 			]]>
 			</if>
 			<if test="direction == null">
@@ -42,13 +42,11 @@
 			<!-- 원래는 #{} : 라고 적었던 친구들은 ``를 자동적으로 붙여주는 친구임. 원래는 ${}이런식으로 설정을 해야한다. -->
 	</select>
 	
-	<select id="selectPostIdByUserIdAsSort" parameterType="map" resultType="int">
+	<select id="selectPostIdAsSort" parameterType="String" resultType="int">
 		SELECT
 			`id`
 		FROM
 			`post`
-		WHERE
-			`userId` = #{userId}
 		ORDER BY `id` ${sort}
 		LIMIT 1
 	</select>
@@ -74,7 +72,7 @@
 		)
 	</insert>
 	
-	<select id="selectPostByPostIdUserId" parameterType="map" resultType="com.keyboardsba.post.domain.Post">
+	<select id="selectPostByPostId" parameterType="map" resultType="com.keyboardsba.post.domain.Post">
 		SELECT
 			`id`
 			,`userId`
@@ -86,8 +84,6 @@
 		FROM
 			`post`
 		WHERE
-			`userId` = #{userId}
-		AND
 			`id` = #{postId}	
 	</select>
 	

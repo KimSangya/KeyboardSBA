@@ -24,14 +24,13 @@ public class PostBO {
 	
 	@Autowired
 	private FileManagerService fileManagerService;
-	
 	// 페이징 정보 필드(limit)
 	private static final int POST_MAX_SIZE = 3;
 	
 	
 	// input : 로그인 된 사람의 userId
 	// output : List<Post>
-	public List<Post> getPostListByUserId(int userId, Integer prevId, Integer nextId) {
+	public List<Post> getPostList(Integer prevId, Integer nextId) {
 		// 게시글 번호 10 9 8 | 7 6 5  | 4 3 2 | 1
 		// 만약 내가 432 페이지에 있을 때,
 		// 1) 다음 : 2보다 작은 3개 DESC
@@ -44,7 +43,7 @@ public class PostBO {
 			standardId = prevId;
 			direction = "prev";
 			
-			List<Post> postList = postMapper.selectPostListByUserId(userId, standardId, direction, POST_MAX_SIZE);
+			List<Post> postList = postMapper.selectPostList(standardId, direction, POST_MAX_SIZE);
 			// [5,6,7] => [7,6,5]
 			Collections.reverse(postList); // 뒤집고 저장
 			
@@ -55,26 +54,26 @@ public class PostBO {
 		}
 		
 		// 3) 페이징 정보 없음, 1) 다음
-		return postMapper.selectPostListByUserId(userId, standardId, direction, POST_MAX_SIZE);
+		return postMapper.selectPostList(standardId, direction, POST_MAX_SIZE);
 	}
 	
 	// 이전 페이지의 마지막인가?
-	public boolean isPrevLastPageByUserId(int userId, int prevId) {
-		int maxPostId = postMapper.selectPostIdByUserIdAsSort(userId, "DESC");
+	public boolean isPrevLastPage(int prevId) {
+		int maxPostId = postMapper.selectPostIdAsSort("DESC");
 		return maxPostId == prevId; // 같으면 마지막이다, 아니면 아니다.
 	}
 	
 	// 다음 페이지의 마지막인가?
-	public boolean isNextLastPageByUserId(int userId, int nextId) {
-		int minPostId = postMapper.selectPostIdByUserIdAsSort(userId, "ASC");
+	public boolean isNextLastPage(int nextId) {
+		int minPostId = postMapper.selectPostIdAsSort("ASC");
 		return minPostId == nextId;
 	}
 	
 	
 	// input : userId, postId
 	// output : Post or null (단건이니까 null값이 리턴 될 수도 있다.)
-	public Post getPostByPostIdUserId(int userId, int PostId) {
-		return postMapper.selectPostByPostIdUserId(userId, PostId) ;
+	public Post getPostByPostId(int PostId) {
+		return postMapper.selectPostByPostId(PostId) ;
 	}
 	
 	// input : 파라미터들
@@ -103,10 +102,10 @@ public class PostBO {
 		
 		// 기존 글 가져온다 (1.이미지 교체시 삭제하기 위해 2. 업데이트 대상이 있는지 확인)
 		// log를 찍을 때, sysout을 사용하면 안된다. 한명당 그 서비스를 사용할때, 그 쓰레드를 하나씩 사용하기 때문에 홈페이지 자체가 느려질수도있다.
-		Post post = postMapper.selectPostByPostIdUserId(userId, postId);
+		Post post = postMapper.selectPostByPostId(postId);
 		if (post == null) {
 			// method 설명 : 로그 레벨 DEBUG, INFO, WARN, ERROR, FATAL => 왼쪽부터 사용빈도수가 높고 오른쪽으로 갈수록 사용 빈도수가 낮다. 
-			log.warn("[글 수정] post is null. userId:{}", userId, postId); // 와일드 카드 문법을 사용할때 ,를 사용한다면 따로 확인이 가능하다.
+			log.warn("[글 수정] post is null. postId:{}", postId); // 와일드 카드 문법을 사용할때 ,를 사용한다면 따로 확인이 가능하다.
 			return;
 		}
 		
@@ -137,7 +136,7 @@ public class PostBO {
 	public void deletePostByPostIdUserId(int postId, int userId) {
 		
 		// 기존글 가져오는 부분
-		Post post = postMapper.selectPostByPostIdUserId(userId, postId);
+		Post post = postMapper.selectPostByPostId(postId);
 		
 		// 원래는 있어야하는데, 만약 없다면
 		if (post == null) {
