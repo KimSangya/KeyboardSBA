@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.keyboardsba.common.FileManagerService;
+import com.keyboardsba.item.domain.Item;
 import com.keyboardsba.post.mapper.PostMapper;
 import com.keyboardsba.post.domain.Post;
 
@@ -154,5 +155,10 @@ public class PostBO {
 			// 폴더와 이미지 제거(서버에서)
 			fileManagerService.deleteFile(post.getImageUrl());
 		}	
+	}
+	
+	public List<Post> getPostList() {
+		List<Post> ItemList = postMapper.selectAllPostList();
+		return ItemList;
 	}
 }

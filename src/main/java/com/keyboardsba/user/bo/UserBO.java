@@ -1,11 +1,13 @@
 package com.keyboardsba.user.bo;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.keyboardsba.kakao.entity.User;
 import com.keyboardsba.user.entity.UserEntity;
 import com.keyboardsba.user.repository.UserRepository;
 
@@ -25,6 +27,7 @@ public class UserBO {
 				.loginId(loginId)
 				.password(password)
 				.name(name)
+				.admin(0)
 				.email(email)
 				.phoneNumber(phoneNumber)
 				.build());
@@ -47,5 +50,9 @@ public class UserBO {
 	public UserEntity userIsExist(String email, String nickname) {
 		UserEntity user = userRepository.findByEmailAndName(email, nickname);
 		return user;
+	}
+	
+	public List<UserEntity> getUserList() {
+		return userRepository.findAllUsers();
 	}
 }

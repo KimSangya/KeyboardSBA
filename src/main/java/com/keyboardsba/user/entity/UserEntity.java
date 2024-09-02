@@ -39,6 +39,8 @@ public class UserEntity {
 	
 	private String email;
 	
+	private int admin;
+	
 	@Column(name = "phoneNumber")
 	private String phoneNumber;
 	

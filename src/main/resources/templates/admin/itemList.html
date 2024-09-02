@@ -18,29 +18,18 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="post : ${postList}">
-					<td th:text="${post.id}">1</td>
+				<tr th:each="item : ${itemList}">
+					<td th:text="${item.id}">1</td>
 					<!-- 앞에 th를 붙이고, 그 뒤에 ||를 붙여서 타임리프를 사용하게 되는 것이다. -->
 					<!-- @{}을 사용해서 만드는 방법 -->
 					<!-- postId = ${안에 계속이런식으로 다른것도 붙일수있다.} -->
 					<!--   <td><a th:href="@{/post/post-detail-view(postId=${post.id}, userId=13})}" th:text="${post.subject}"></a></td> a태그를 넣는다고 하더라도 타임리프가 우선이니 따로 달수가 없다. --> 
-					<td><a th:href="|/post/post-detail-view?postId=${post.id}|" th:text="${post.subject}"></a></td>
-					<td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-07-16</td> <!-- temporals.format(들어갈 함수, "나타내고 싶은 함수") -->
-					<td th:text="${post.updatedAt}">2024-07-16</td>
+					<td><a th:href="|/item/item-detail-view?itemId=${item.id}|" th:text="${item.title}"></a></td>
+					<td th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-07-16</td> <!-- temporals.format(들어갈 함수, "나타내고 싶은 함수") -->
+					<td th:text="${item.updatedAt}">2024-07-16</td>
 				</tr>
 			</tbody>
 		</table>
-		
-		<!-- 페이징 -->
-		<div class="text-center">
-			<a th:if="${prevId != 0}" th:href="|/post/post-list-view?prevId=${prevId}|" class="mr-5">&lt;&lt; 이전</a>
-			<a th:if="${nextId != 0}" th:href="|/post/post-list-view?nextId=${nextId}|">다음 &gt;&gt;</a>
-		</div>
-		
-		<!-- 글쓰기 버튼 -->
-		<div class="d-flex justify-content-end">
-			<a href="/post/post-create-view" class="btn btn-warning">글쓰기</a>
-		</div>
 	</div>
 </section>
 

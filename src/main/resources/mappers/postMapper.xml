@@ -87,6 +87,19 @@
 			`id` = #{postId}	
 	</select>
 	
+	<select id="selectAllPostList" resultType="com.keyboardsba.post.domain.Post">
+		SELECT
+			`id`
+			,`userId`
+			,`subject`
+			,`content`
+			,`imageUrl`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`post`
+	</select>
+	
 	<update id="updatePostByPostId" parameterType="map">
 		UPDATE `post`
 		SET

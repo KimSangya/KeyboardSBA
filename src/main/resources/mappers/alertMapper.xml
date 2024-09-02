@@ -20,4 +20,16 @@
  			,NOW()
  		)
  	</insert>
+ 	
+ 	<select id="selectAlertList" resultType="com.keyboardsba.alert.domain.Alert">
+ 		SELECT 
+ 			`id`
+			,`userId`
+			,`subject`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`alert`
+ 	</select>
  </mapper>

@@ -37,6 +37,8 @@ public interface ItemMapper {
 	
 	public List<Item> selectItemListByType(String type);
 	
+	public List<Item> selectItemList();
+	
 	public Item selectItemByItemId(int itemId);
 	
 	public Item selectItemByItemIdAndUserId(

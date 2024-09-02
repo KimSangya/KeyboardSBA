@@ -54,6 +54,22 @@
 			`type` = #{type}
 	</select>
 	
+	<select id="selectItemList" resultType="com.keyboardsba.item.domain.Item">
+		SELECT
+			`id`
+			,`userId`
+			,`loginId`
+			,`title`
+			,`price`
+			,`status`
+			,`type`
+			,`imageUrl`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`item`
+	</select>
+	
 	<select id="selectItemByItemId" parameterType="int" resultType="com.keyboardsba.item.domain.Item">
 		SELECT
 			`id`

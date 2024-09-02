@@ -1,11 +1,15 @@
 package com.keyboardsba.alert.bo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.keyboardsba.alert.domain.Alert;
 import com.keyboardsba.alert.mapper.AlertMapper;
 import com.keyboardsba.common.FileManagerService;
+import com.keyboardsba.item.domain.Item;
 
 @Service
 public class AlertBO {
@@ -28,5 +32,10 @@ public class AlertBO {
 		}
 		
 		alertMapper.insertAlert(userId, subject, content, imagePath);
+	}
+	
+	public List<Alert> getAlertList() {
+		List<Alert> AlertList = alertMapper.selectAlertList();
+		return AlertList;
 	}
 }

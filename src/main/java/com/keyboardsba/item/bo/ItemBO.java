@@ -64,6 +64,11 @@ public class ItemBO {
 			itemMapper.updateItem(itemId, userId, loginId, productName, productPrice, productStatus, productValue, writeTextArea, time, imagePath);
 		}
 	
+	public List<Item> getItemList() {
+		List<Item> ItemList = itemMapper.selectItemList();
+		return ItemList;
+	}
+	
 	public List<Item> getItemListByType(String type) {
 		List<Item> ItemList = itemMapper.selectItemListByType(type);
 		return ItemList;

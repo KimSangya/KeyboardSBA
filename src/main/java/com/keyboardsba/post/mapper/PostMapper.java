@@ -37,4 +37,6 @@ public interface PostMapper {
 			@Param("imagePath") String imagePath);
 	
 	public int deletePostByPostId(int postId);
+	
+	public List<Post> selectAllPostList();
 }
