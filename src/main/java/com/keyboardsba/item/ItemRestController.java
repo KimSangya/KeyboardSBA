@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -111,4 +112,34 @@ public class ItemRestController {
 		
 		return result;
 	}
+	
+	@DeleteMapping("/delete") // 운영진용
+	public Map<String, Object> itemDelete(
+			@RequestParam("itemId") int itemId,
+			HttpSession session){
+		
+		itemBO.deleteItem(itemId);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+		result.put("result", "성공");
+		
+		return result;
+	}
+	
+	@DeleteMapping("/deleteDetail") // 회원용
+	public Map<String, Object> itemDeleteDetail(
+			@RequestParam("itemId") int itemId,
+			HttpSession session){
+		
+		int userId = (int)session.getAttribute("userId");
+		itemBO.deleteItemDetail(itemId, userId);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+		result.put("result", "성공");
+		
+		return result;
+	}
+	
 }

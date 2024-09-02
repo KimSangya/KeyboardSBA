@@ -47,4 +47,10 @@ public interface ItemMapper {
 	
 	
 	public int selectUserId(int contactId);
+	
+	public void deleteItem(int itemId);
+	
+	public void deleteItemDetail(
+			@Param("itemId") int itemId,
+			@Param("userId") int userId);
 }

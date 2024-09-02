@@ -44,6 +44,7 @@
 				</div>
 				<br>
 				<div class="d-flex justify-content-center m-3">
+						<button type="button" th:if="${session.userId == item.userId}" class="delete btn btnRed mr-5" th:data-item-id="${item.id}">삭제</button>
 						<a href="#" class="btn btnCheck callBtn" th:data-contact-id="${item.Id}" data-toggle="modal" data-target="#Modal">연락하기</a>
 						<a th:href="|/item/item-update-view?itemId=${item.id}|" th:if="${item.userId == session.userId}" id="updateBtn" class="btn btnCheck ml-5">수정하기</a>
 				</div>
@@ -93,6 +94,28 @@
 				}
 				, error:function(e) {
 					alert("열기에 실패하셨습니다.");
+				}
+			});
+		});
+		
+		$(".delete").on("click", function(){
+			let num = $(this).data("item-id");
+			// alert(num);
+			
+			$.ajax({
+				type: "delete"
+				, url : "/item/deleteDetail"
+				, data : {"itemId" : num}
+				, success:function(data) {
+					if(data.code == 200) {
+						alert("삭제가 완료되었습니다.");
+						location.href="/item/item-list-view";
+					} else {
+						alert("문제가 발생하였습니다.");
+					}
+				}
+				, error:function(e) {
+					alert("서버에 문제가 발생하였습니다");
 				}
 			});
 		});

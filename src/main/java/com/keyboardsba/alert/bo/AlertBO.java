@@ -38,4 +38,8 @@ public class AlertBO {
 		List<Alert> AlertList = alertMapper.selectAlertList();
 		return AlertList;
 	}
+	
+	public void deleteAlert(int alertId) {
+		alertMapper.deleteAlert(alertId);
+	}
 }

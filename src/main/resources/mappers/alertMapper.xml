@@ -32,4 +32,12 @@
 		FROM
 			`alert`
  	</select>
+ 	
+ 	<delete id="deleteAlert">
+ 		DELETE
+ 		FROM
+ 			`alert`
+ 		WHERE
+ 			`id` = #{alertId}
+ 	</delete>
  </mapper>

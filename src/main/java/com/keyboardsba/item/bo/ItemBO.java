@@ -90,4 +90,12 @@ public class ItemBO {
 		int userId = getItemByUserId(contactId);
 		return userBO.selectUserId(userId);
 	}
+	
+	public void deleteItem(int itemId) { // 운영진용
+		itemMapper.deleteItem(itemId);
+	}
+	
+	public void deleteItemDetail(int itemId, int userId) {
+		itemMapper.deleteItemDetail(itemId, userId);
+	}
 }

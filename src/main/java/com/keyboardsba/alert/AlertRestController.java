@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,7 @@ public class AlertRestController {
 	private AlertBO alertBO;
 	
 	@PostMapping("/create")
-	public Map<String, Object> PostCreate(
+	public Map<String, Object> alertCreate(
 			@RequestParam("subject") String subject,
 			@RequestParam("content") String content,
 			@RequestParam(value = "file", required = false) MultipartFile file,
@@ -43,4 +44,19 @@ public class AlertRestController {
 		
 		return result;
 	}
+	
+	@DeleteMapping("/delete")
+	public Map<String, Object> alertDelete(
+			@RequestParam("alertId") int alertId,
+			HttpSession session){
+		
+		alertBO.deleteAlert(alertId);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+		result.put("result", "성공");
+		
+		return result;
+	}
+	
 }

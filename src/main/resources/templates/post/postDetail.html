@@ -4,33 +4,40 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/defaultLayout}">
 <section layout:fragment="content" class="contents d-flex justify-content-center">
-	<div class="w-50"> <!-- 가운데 정렬이 가능하다. -->
-		<h1>글 상세</h1>
-		<!-- [[${post}]] --> <!-- 글이 실행이 되지 않을때는, 따로 서버에서 breakpoint를 찍어보면서 확인을 해봐라. -->
-		
+	<div class="w-50">
+		<div class="d-flex justify-content-center">
+			<h1>글 상세</h1>
+		</div>
+		<div class="d-flex justify-content-start">
+			<span>글쓴이 : </span>
+			<span th:text="${user.loginId}" class="ml-2 mb-2"></span>
+		</div>
 		<!-- input은 따로 사용할때는 th:value로 사용이 가능하다. -->
-		<input type="text" id="subject" th:value="${post.subject}" class="form-control" placeholder="제목을 입력하세요">
+		<div class="mb-3">
+			<span>제목 : </span>
+			<span th:text="${post.subject}" class="ml-2"></span>
+		</div>
 		
 		<!-- 택스트 area에서는 따로 사용할때는 th:text를 사용해서 확인을 할수가 있다. -->
 		<textarea rows="10" id="content" class="form-control" placeholder="내용을 입력하세요" th:text="${post.content}"></textarea>
-		
 		<!-- 이미지가 있을 때에만 영역 표시, 노출 if문을 사용해서 넣어버린다 -->
 		<div class="my-3" th:if="${post.imageUrl != null}">
 			<img th:src="${post.imageUrl}" alt="본문 이미지" width="300">
 		</div>
 		
 		
-		<div class="d-flex justify-content-end">
+		<div th:if="${session.userId == post.userId}" class="d-flex justify-content-end">
 			<input type="file" id="file" class="my-3" accept=".jpg, .png, .gif, .jpeg"> <!-- accept태그를 사용하면서 어떤 확장자만 저장이 가능한가에 대해서 확인이 가능하다. -->
 		</div>
 		
-		<div class="d-flex justify-content-between">
-			<button type="button" id="deleteBtn" class="btn btn-secondary" th:data-post-id="${post.id}">삭제</button>
-			
-			<div>
-				<a href="/post/post-list-view" class="btn btn-secondary">목록</a>
-				<button type="button" id="saveBtn" class="btn btn-warning" th:data-post-id="${post.id}">수정</button>
-			</div>
+		<div class="d-flex justify-content-between mt-3">
+		    <div th:if="${session.userId == post.userId}">
+		        <button type="button" id="deleteBtn" class="btn btn-secondary" th:data-post-id="${post.id}">삭제</button>
+		    </div>
+		    <div class="ml-auto"> <!-- 이 클래스 추가 -->
+		        <a href="/post/post-list-view" class="btn btn-secondary">목록</a>
+		        <button th:if="${session.userId == post.userId}" type="button" id="saveBtn" class="btn btn-warning" th:data-post-id="${post.id}">수정</button>
+		    </div>
 		</div>
 	</div>
 </section>

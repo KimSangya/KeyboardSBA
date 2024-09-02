@@ -1,6 +1,8 @@
 package com.keyboardsba.post.bo;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.keyboardsba.common.FileManagerService;
 import com.keyboardsba.item.domain.Item;
 import com.keyboardsba.post.mapper.PostMapper;
+import com.keyboardsba.user.bo.UserBO;
+import com.keyboardsba.user.entity.UserEntity;
 import com.keyboardsba.post.domain.Post;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +23,9 @@ import lombok.extern.slf4j.Slf4j;
 public class PostBO {
 	// private Logger log = LoggerFactory.getLogger(PostBO.class);
 	// private Logger log = LoggerFactory.getLogger(this.getClass()); // 쓰고 싶은 친구에게 logger를 찍어서 보내는 역할
+	
+	@Autowired
+	private UserBO userBO;
 	
 	@Autowired
 	private PostMapper postMapper;
@@ -58,6 +65,15 @@ public class PostBO {
 		return postMapper.selectPostList(standardId, direction, POST_MAX_SIZE);
 	}
 	
+	public List<UserEntity> getLoginIdList(List<Post> postList) {
+		List<UserEntity> userList = new ArrayList<>();
+		for(Post user : postList) {
+			int userId = user.getUserId();
+			userList.add(userBO.getUserEntityByuserId(userId));
+		}
+		return userList;
+	}
+	
 	// 이전 페이지의 마지막인가?
 	public boolean isPrevLastPage(int prevId) {
 		int maxPostId = postMapper.selectPostIdAsSort("DESC");
@@ -74,7 +90,14 @@ public class PostBO {
 	// input : userId, postId
 	// output : Post or null (단건이니까 null값이 리턴 될 수도 있다.)
 	public Post getPostByPostId(int PostId) {
-		return postMapper.selectPostByPostId(PostId) ;
+		return postMapper.selectPostByPostId(PostId);
+	}
+	
+	public UserEntity getLoginId(int postId) {
+		// 내가 가져오고 싶은 친구는 userId에 있는 loginId값
+		Post post = postMapper.selectPostByPostId(postId);
+		int user = post.getUserId();
+		return userBO.getUserEntityByuserId(user);
 	}
 	
 	// input : 파라미터들

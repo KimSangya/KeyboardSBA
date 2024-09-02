@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.keyboardsba.kakao.entity.User;
 import com.keyboardsba.user.entity.UserEntity;
 
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
@@ -20,4 +19,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 	
 	@Query("SELECT u FROM UserEntity u")
     public List<UserEntity> findAllUsers();
+	
+    public void deleteById(int userId);
 }

@@ -16,4 +16,6 @@ public interface AlertMapper {
 			@Param("imagePath") String imagePath);
 	
 	public List<Alert> selectAlertList();
+	
+	public void deleteAlert(int alertId);
 }

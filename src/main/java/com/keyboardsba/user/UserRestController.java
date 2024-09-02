@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -89,5 +90,18 @@ public class UserRestController {
 				}
 				// 응답값
 				return result;
+	}
+	
+	@DeleteMapping("/delete")
+	public Map<String, Object> deleteUser(
+			@RequestParam("userId") int userId,
+			HttpSession session){
+		
+		userBO.deleteUser(userId);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+		result.put("result", "성공");
+		return result;
 	}
 }

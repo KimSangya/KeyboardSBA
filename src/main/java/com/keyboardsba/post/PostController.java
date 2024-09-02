@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.keyboardsba.post.bo.PostBO;
 import com.keyboardsba.post.domain.Post;
+import com.keyboardsba.user.entity.UserEntity;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -28,9 +29,10 @@ public class PostController {
 			HttpSession session, Model model) {
 		// 로그인 여부 확인
 		// int로 하는 순간 error가 날것이다. 왜냐면 int는 null값을 못받기 때문에.
-		
 		// DB 조회 (글목록에 대해서)
 		List<Post> postList = postBO.getPostList(prevIdParam, nextIdParam);
+		List<UserEntity> userList = postBO.getLoginIdList(postList);
+		
 		int prevId = 0;
 		int nextId = 0; // 비교를 할 때는 isempty, issize() < 0
 		if(postList.isEmpty() == false) { // 글 목록이 비어있지 않을 때 페이징 정보 세팅
@@ -50,10 +52,12 @@ public class PostController {
 			}
 		}
 		
+		
 		// 모델에 담기 (view가 있는곳)
 		model.addAttribute("prevId", prevId);
 		model.addAttribute("nextId", nextId);
 		model.addAttribute("postList", postList);
+		model.addAttribute("userList", userList);
 		
 		// userId가 있음으로 그냥 리턴을 하게 되는 것이다.
 		return "post/postList";
@@ -82,10 +86,12 @@ public class PostController {
 		// 쿼리문부터 생각해라. 어떤걸 가져오는지에 대해서 생각을 해야함. 글 번호와 아이디 번호까지 가져오는것
 		// db 조회 = userId, postId
 		int userId = (int)session.getAttribute("userId"); // 한번더 검사를 하는 과정, 만약 session으로 에러가 났다면 로그인이 풀렸다는 것이다.
+		UserEntity user = postBO.getLoginId(postId);
 		Post post = postBO.getPostByPostId(postId);
 		
 		// 화면이 어디로 갈건지 model에 담기
 		model.addAttribute("post", post);
+		model.addAttribute("user", user);
 		
 		// 화면 이동
 		return "post/postDetail";

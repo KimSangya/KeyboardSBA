@@ -14,7 +14,7 @@
 					<th>No.</th>
 					<th>제목</th>
 					<th>작성날짜</th>
-					<th>수정날짜</th>
+					<th>삭제</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -26,7 +26,9 @@
 					<!--   <td><a th:href="@{/post/post-detail-view(postId=${post.id}, userId=13})}" th:text="${post.subject}"></a></td> a태그를 넣는다고 하더라도 타임리프가 우선이니 따로 달수가 없다. --> 
 					<td><a th:href="|/item/item-detail-view?itemId=${item.id}|" th:text="${item.title}"></a></td>
 					<td th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-07-16</td> <!-- temporals.format(들어갈 함수, "나타내고 싶은 함수") -->
-					<td th:text="${item.updatedAt}">2024-07-16</td>
+					<td>
+						<button class="btn custom-btn btn-danger item" th:data-item-id="${item.id}">삭제</button>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -35,6 +37,28 @@
 
 <th:block layout:fragment="script">
     <script>
-		
+    $(document).ready(function(){
+		$(".item").on("click", function(){
+			let num = $(this).data("item-id");
+			// alert(num);
+			
+			$.ajax({
+				type: "delete"
+				, url : "/item/delete"
+				, data : {"itemId" : num}
+				, success:function(data) {
+					if(data.code == 200) {
+						alert("삭제가 완료되었습니다.");
+						location.reload(true);
+					} else {
+						alert("문제가 발생하였습니다.");
+					}
+				}
+				, error:function(e) {
+					alert("서버에 문제가 발생하였습니다");
+				}
+			});
+		});
+	});
     </script>
 </th:block>

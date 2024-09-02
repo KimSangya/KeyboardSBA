@@ -6,11 +6,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.keyboardsba.kakao.entity.User;
 import com.keyboardsba.user.entity.UserEntity;
 import com.keyboardsba.user.repository.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserBO {
 
@@ -19,6 +22,10 @@ public class UserBO {
 	
 	public UserEntity getUserEntityByLoginId(String loginId) {
 		return userRepository.findByloginId(loginId);
+	}
+	
+	public UserEntity getUserEntityByuserId(int userId) {
+		return userRepository.findById(userId);
 	}
 	
 	public UserEntity addUser(String loginId, 
@@ -39,7 +46,6 @@ public class UserBO {
 	
 	public Map<String, Object> selectUserId(int userId) {
 		UserEntity user = userRepository.findById(userId);
-		
 		Map<String, Object> userInfo = new HashMap<>();
 		userInfo.put("name", user.getName());
 		userInfo.put("phoneNumber", user.getPhoneNumber());
@@ -54,5 +60,10 @@ public class UserBO {
 	
 	public List<UserEntity> getUserList() {
 		return userRepository.findAllUsers();
+	}
+	
+	@Transactional
+	public void deleteUser(int userId) {
+		userRepository.deleteById(userId);
 	}
 }

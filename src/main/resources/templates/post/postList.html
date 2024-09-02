@@ -12,16 +12,16 @@
 				<tr>
 					<th>No.</th>
 					<th>제목</th>
+					<th>작성자</th>
 					<th>작성날짜</th>
-					<th>수정날짜</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="post : ${postList}">
+				<tr th:each="post, count: ${postList}"> <!-- 리스트를 합치기에는 따로 하기그래서 따로 알아본 결과로는 이런식으로도 합칠수있다고 하더라. 원래 같으면 카드뷰처럼 하는게 좋긴하다만.. -->
 					<td th:text="${post.id}">1</td> 
 					<td><a th:href="|/post/post-detail-view?postId=${post.id}|" th:text="${post.subject}"></a></td>
+					 <td th:text="${userList[count.index].loginId}"></td>
 					<td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-07-16</td> <!-- temporals.format(들어갈 함수, "나타내고 싶은 함수") -->
-					<td th:text="${post.updatedAt}">2024-07-16</td>
 				</tr>
 			</tbody>
 		</table>

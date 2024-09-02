@@ -138,4 +138,21 @@
 			`id` = ${itemId}
 	</update>
 	
+	 <delete id="deleteItem">
+ 		DELETE
+ 		FROM
+ 			`item`
+ 		WHERE
+ 			`id` = #{itemId}
+ 	</delete>
+ 	
+ 	 <delete id="deleteItemDetail" parameterType="map">
+ 		DELETE
+ 		FROM
+ 			`item`
+ 		WHERE
+ 			`id` = #{itemId}
+ 		AND
+ 			`userId` = ${userId}
+ 	</delete>
  </mapper>

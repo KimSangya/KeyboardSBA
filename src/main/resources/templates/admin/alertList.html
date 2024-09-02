@@ -15,7 +15,7 @@
 					<th>제목</th>
 					<th>내용</th>
 					<th>작성날짜</th>
-					<th>수정날짜</th>
+					<th>삭제</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -28,7 +28,9 @@
 					<td th:text="${alert.subject}"></td>
 					<td th:text="${alert.content}"></td>
 					<td th:text="${#temporals.format(alert.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-07-16</td> <!-- temporals.format(들어갈 함수, "나타내고 싶은 함수") -->
-					<td th:text="${alert.updatedAt}">2024-07-16</td>
+					<td>
+						<button class="btn custom-btn btn-danger alert" th:data-alert-id="${alert.id}">삭제</button>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -37,6 +39,27 @@
 
 <th:block layout:fragment="script">
     <script>
-		
+		$(document).ready(function(){
+			$(".alert").on("click", function(){
+				let num = $(this).data("alert-id"); // 완료
+				
+				$.ajax({
+					type: "delete"
+					, url : "/alert/delete"
+					, data : {"alertId" : num}
+					, success:function(data) {
+						if(data.code == 200) {
+							alert("삭제가 완료되었습니다.");
+							location.reload(true);
+						} else {
+							alert("문제가 발생하였습니다.");
+						}
+					}
+					, error:function(e) {
+						alert("서버에 문제가 발생하였습니다");
+					}
+				});
+			});
+		});
     </script>
 </th:block>
