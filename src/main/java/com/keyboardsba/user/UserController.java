@@ -43,6 +43,7 @@ public class UserController {
 		session.removeAttribute("userId"); // 키 이름을 넣으면 되는 것이다.
 		session.removeAttribute("loginId");
 		session.removeAttribute("userName");
+		session.removeAttribute("admin");
 		
 		// 로그인 페이지로 이동
 		return "redirect:/user/sign-in-view";

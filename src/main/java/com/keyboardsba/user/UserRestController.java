@@ -80,6 +80,7 @@ public class UserRestController {
 					session.setAttribute("userId", user.getId());
 					session.setAttribute("loginId", user.getLoginId()); // 나중에 글쓰기 할때 사람의 값을 가져오기 위해서
 					session.setAttribute("userName", user.getName());
+					session.setAttribute("admin", user.getAdmin());
 					result.put("code", 200);
 					result.put("result", "성공");
 				} else { // 실패

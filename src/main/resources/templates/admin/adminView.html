@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+      
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-50">
+		<h1>관리자 페이지</h1>
+		
+		<table class="table">
+			<thead>
+				<tr>
+					<th>관리 페이지</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><a href="/admin/alert">신고 관리</a></td>
+				</tr>
+				<tr>
+					<td><a href="/admin/post">게시판 관리</a></td>
+				</tr>
+				<tr>
+					<td><a href="/admin/item">매물 관리</a></td>
+				</tr>
+				<tr>
+					<td><a href="/admin/user">유저 관리</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+		
+    </script>
+</th:block>

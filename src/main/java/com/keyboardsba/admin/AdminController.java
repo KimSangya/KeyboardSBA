@@ -21,6 +21,11 @@ public class AdminController {
 	@Autowired
 	private AdminBO adminBO;
 	
+	@GetMapping("/admin-list-view")
+	public String admin() {
+		return "admin/adminView";
+	}
+	
 	@GetMapping("/alert")
 	public String alertList(Model model) {
 		List<Alert> alertList = adminBO.getAlertList();
@@ -48,5 +53,4 @@ public class AdminController {
 		model.addAttribute("userList", userList);
 		return "admin/userList";
 	}
-	
 }
