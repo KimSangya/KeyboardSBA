@@ -72,8 +72,10 @@
 			.done(function(data) {
 				if(data.result == "성공") {
 					location.href="/item/item-list-view";
+				} else if(data.code == 403) {
+					alert(data.error_message);
 				} else {
-					alert(error_message);
+					alert("서버 오류입니다 관리자에게 문의하세요");
 				}
 			});
 		});

@@ -70,8 +70,9 @@ public class UserRestController {
 			HttpServletRequest request) {
 		
 		// db 조회 - loginId, 해싱된 비밀번호 => UserEntity 하나의 행
-				UserEntity user = userBO.getUserEntityByLoginIdPassword(loginId, password);
-
+				String hashedPassword = EncryptUtils.SHA256(password);
+				UserEntity user = userBO.getUserEntityByLoginIdPassword(loginId, hashedPassword);
+				
 				// 로그인 처리
 				// 여기서 분기
 				Map<String, Object> result = new HashMap<>();

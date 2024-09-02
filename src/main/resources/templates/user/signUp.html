@@ -61,9 +61,9 @@
     <script>
 		$(document).ready(function() {
 			$("#loginIdCheckBtn").on("click", function() {
-				$("#IdCheckLength").addClass("d-none");
-				$("#IdCheckDuplicated").addClass("d-none");
-				$("#IdCheckOk").addClass("d-none");
+				$("#idCheckLength").addClass("d-none");
+				$("#idCheckDuplicated").addClass("d-none");
+				$("#idCheckOk").addClass("d-none");
 				
 				let loginId = $("#loginId").val().trim();
 				
@@ -151,8 +151,10 @@
 					if(data.code == 200) {
 						alert("가입을 환영합니다. 로그인을 해주세요");
 						location.href = "/user/sign-in-view";
-					} else {
+					} else if(data.code == 403) {
 						alert(data.error_message);
+					} else {
+						alert("서버 오류입니다 관리자에게 문의하세요");
 					}
 				});
 			});
