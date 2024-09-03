@@ -64,6 +64,7 @@ public class UserBO {
 	
 	@Transactional
 	public void deleteUser(int userId) {
-		userRepository.deleteById(userId);
+		UserEntity user = userRepository.findById(userId);
+		userRepository.delete(user);
 	}
 }

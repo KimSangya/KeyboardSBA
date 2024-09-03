@@ -29,11 +29,6 @@ public class Permissionlnterceptor implements HandlerInterceptor{
 			response.sendRedirect("/user/sign-in-view");
 			return false; 
 		}
-
-		if(userId != null && uri.startsWith("/user")) {
-			response.sendRedirect("/post/post-list-view");
-			return false; 
-		}
 		
 		return true; 
 	}

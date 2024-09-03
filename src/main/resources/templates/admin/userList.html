@@ -39,7 +39,7 @@
 			alert(num);
 			
 			$.ajax({
-				type: "delete"
+				type: "post"
 				, url : "/user/delete"
 				, data : {"userId" : num}
 				, success:function(data) {

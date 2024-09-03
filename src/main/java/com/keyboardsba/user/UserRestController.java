@@ -93,7 +93,7 @@ public class UserRestController {
 				return result;
 	}
 	
-	@DeleteMapping("/delete")
+	@PostMapping("/delete")
 	public Map<String, Object> deleteUser(
 			@RequestParam("userId") int userId,
 			HttpSession session){
