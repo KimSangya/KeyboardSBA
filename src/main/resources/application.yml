@@ -1,0 +1,49 @@
+server:
+  port: 80
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB  
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/keyboard_sba?characterEncoding=UTF-8
+    username: root
+    password: Kgh0103!
+  jpa:
+    database: mysql   # 추가 해준 부분
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: none
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hiberate:
+        format_sql:true
+  security:
+    oauth2:
+      client:
+        registration:
+           kakao:
+            client-id: 970c46f4778e7f619bd5e2c8dd6af318
+            redirect-uri: http://localhost/kakao/callback
+            client-secret: H4An6FIZaQmDl5YFaRx4ETCXXj4s9M5c
+            scope:
+              - account_email
+              - profile_nickname
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+mybatis:
+  mapper-locations: mappers/*Mapper.xml
+
