@@ -72,7 +72,7 @@ public class ItemController {
 		Integer userId = (Integer)session.getAttribute("userId");
 		
 		if(userId == null) {
-			return "redirect:/";
+			return "redirect:/user/sign-in-view";
 		}
 		
 		Item item = itemBO.getItemByItemId(itemId);
@@ -89,7 +89,7 @@ public class ItemController {
 		Integer userId = (Integer)session.getAttribute("userId");
 		
 		if(userId == null) {
-			return "redirect:/";
+			return "redirect:/user/sign-in-view";
 		}
 		
 		Item item = itemBO.getItemByItemIdAndUserId(itemId, userId);

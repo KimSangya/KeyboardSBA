@@ -26,7 +26,7 @@ public class KakaoBO {
         params.put("grant_type", "authorization_code");
         params.put("client_id", "970c46f4778e7f619bd5e2c8dd6af318");
         params.put("client_secret", "H4An6FIZaQmDl5YFaRx4ETCXXj4s9M5c");
-        params.put("redirect_uri", "http://localhost/kakao/callback");
+        params.put("redirect_uri", "http://43.203.120.245:8080/kakao/callback");
         params.put("code", code);
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(tokenUri)

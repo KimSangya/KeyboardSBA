@@ -25,7 +25,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class KakaoController {
 
     private static final String client_id = "970c46f4778e7f619bd5e2c8dd6af318";
-    private static final String redirect_uri = "http://localhost/kakao/callback";
+    private static final String redirect_uri = "http://43.203.120.245:8080/kakao/callback";
 
     @Autowired
     private KakaoBO kakaoBO;

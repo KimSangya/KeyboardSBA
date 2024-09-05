@@ -48,7 +48,7 @@
 			// 글 수정
 			$("#saveBtn").on("click", function() {
 				let postId = $(this).data('post-id');
-				let subject = $("#subject").val().trim(); // 제목의 내용을 가져오고
+				let subject = $("#subject").val(); // 제목의 내용을 가져오고
 				let content = $("#content").val(); // 글 내용을 가져오고
 				let fileName = $("#file").val(); // 파일명인것일뿐이다. C:\fakepath\bird-7943041_640.jpg 요런 값이 들어있다. 진짜 이미지가 아닌, 파일의 경로일뿐이다.
 				// console.log(file);  
