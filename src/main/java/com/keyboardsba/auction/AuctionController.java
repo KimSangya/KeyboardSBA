@@ -44,7 +44,7 @@ public class AuctionController {
 		Integer userId = (Integer)session.getAttribute("userId");
 		
 		if(userId == null) {
-			return "redirect:/";
+			return "redirect:/user/sign-in-view";
 		}
 		
 		Item item = auctionBO.getItemByItemId(itemId);
@@ -61,7 +61,7 @@ public class AuctionController {
 		Integer userId = (Integer)session.getAttribute("userId");
 		
 		if(userId == null) {
-			return "redirect:/";
+			return "redirect:/user/sign-in-view";
 		}
 		
 		Item item = auctionBO.getItemByItemIdAndUserId(itemId, userId);

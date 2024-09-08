@@ -14,6 +14,8 @@ import com.keyboardsba.item.domain.Item;
 import com.keyboardsba.post.domain.Post;
 import com.keyboardsba.user.entity.UserEntity;
 
+import jakarta.servlet.http.HttpSession;
+
 @RequestMapping("/admin")
 @Controller
 public class AdminController {
@@ -22,7 +24,13 @@ public class AdminController {
 	private AdminBO adminBO;
 	
 	@GetMapping("/admin-list-view")
-	public String admin() {
+	public String admin(Model model,
+			HttpSession session) {
+		int admin = (int)session.getAttribute("admin");
+		if(admin != 1) {
+			return "item/item-list-view";
+		}
+		
 		return "admin/adminView";
 	}
 	
